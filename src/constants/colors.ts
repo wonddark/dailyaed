@@ -1,0 +1,36 @@
+export default {
+  light: {
+    muted: "#9CA3AF",
+    primary: "#135D00",
+    primaryContrast: "#FFFFFF",
+    primaryHover: "#0F4A00",
+    accent: "#C6A75E",
+    background: "#F9FAFB",
+    good: "#135D00",
+    bad: "#590000",
+    body: "#1E1E1E",
+    body2: "#6B7280",
+    inputBorder: "#D1D5DB",
+    divider: "#E5E7EB",
+    card: {
+      background: "#FFFFFF",
+    },
+  },
+  dark: {
+    muted: "#4B6B61",
+    primary: "#135D00",
+    primaryContrast: "#FFFFFF",
+    primaryHover: "#0F4A00",
+    accent: "#C6A75E",
+    background: "#081C15",
+    good: "#4ADE80",
+    bad: "#FF6B6B",
+    body: "#FFFFFF",
+    body2: "#A7C7BB",
+    inputBorder: "#1F3A30",
+    divider: "#1A3B30",
+    card: {
+      background: "#0F2A21",
+    },
+  },
+};
