@@ -40,6 +40,11 @@ const englishTranslations = {
     requiredField: "Required field",
     passwordMustMatch: "Passwords must match",
     positiveValueExpected: "Value must be greater than 0",
+    changeMonth: "Change Month",
+    totalIncome: "Total Income",
+    totalExpenses: "Total Expenses",
+    totalProfit: "Total Profit",
+    dailySummary: "Daily Summary",
   },
 };
 

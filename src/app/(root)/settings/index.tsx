@@ -41,7 +41,7 @@ const Settings = () => {
         loading={status.loading}
       />
       <Link href="/daily-summary" asChild dismissTo>
-        <Button label={t("backToSummary")} variant="ghost" />
+        <Button label={t("dailySummary")} variant="ghost" />
       </Link>
     </RootView>
   );

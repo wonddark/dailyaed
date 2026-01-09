@@ -39,6 +39,11 @@ const arabicTranslations = {
     requiredField: "",
     passwordMustMatch: "",
     positiveValueExpected: "",
+    changeMonth: "",
+    totalIncome: "",
+    totalExpenses: "",
+    totalProfit: "",
+    dailySummary: "",
   },
 };
 

@@ -69,7 +69,11 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
         },
       },
       color: {
-        secondary: {},
+        secondary: {
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: `${theme.colors.body2}99`,
+        },
         ghost: {},
         link: {
           paddingHorizontal: 0,
@@ -87,7 +91,7 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     variants: {
       color: {
         secondary: {
-          color: theme.colors.primary,
+          color: `${theme.colors.body2}99`,
         },
         ghost: {
           color: theme.colors.primary,

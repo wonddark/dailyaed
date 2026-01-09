@@ -5,11 +5,12 @@ import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { RootView, View } from "@/components/views";
-import { ActivityIndicator, Linking, Platform } from "react-native";
+import { ActivityIndicator, Linking, Platform, Pressable } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
 import { generateWSLink } from "@/utils/share-as-text";
 import PageHeader from "@/components/PageHeader";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 
 const MonthlySummary = () => {
   const { t } = useTranslation();
@@ -97,14 +98,21 @@ const MonthlySummary = () => {
           <View style={styles.dateContainer}>
             <Text style={styles.dateLabel}>{currentMonth}</Text>
             <Link href="/choose-date" asChild>
-              <Button label="Change Month" variant="link" size="small" />
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>{t("changeMonth")}</Text>
+                <SimpleLineIcons
+                  name="arrow-right"
+                  color={styles.icon.color}
+                  size={styles.icon.height}
+                />
+              </Pressable>
             </Link>
           </View>
         }
       />
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Total Income</Text>
+        <Text style={styles.cardTitle}>{t("totalIncome")}</Text>
         <View style={styles.cardContent}>
           <Text style={styles.cardAmount}>{totalIncome}</Text>
           <Text style={styles.cardCurrency}>AED</Text>
@@ -112,7 +120,7 @@ const MonthlySummary = () => {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Total Expenses</Text>
+        <Text style={styles.cardTitle}>{t("totalExpenses")}</Text>
         <View style={styles.cardContent}>
           <Text style={styles.cardAmount}>{totalExpenses}</Text>
           <Text style={styles.cardCurrency}>AED</Text>
@@ -120,7 +128,7 @@ const MonthlySummary = () => {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Total Profit</Text>
+        <Text style={styles.cardTitle}>{t("totalProfit")}</Text>
         <View style={styles.cardContent}>
           <Text style={styles.cardAmount}>{totalProfit}</Text>
           <Text style={styles.cardCurrency}>AED</Text>
@@ -128,9 +136,9 @@ const MonthlySummary = () => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Button onPress={onShare} label="Share by WhatsApp" />
+        <Button onPress={onShare} label={t("shareByWS")} />
         <Link href="/daily-summary" asChild dismissTo>
-          <Button label="Back to Daily Summary" variant="secondary" />
+          <Button label={t("dailySummary")} variant="secondary" />
         </Link>
       </View>
     </RootView>
@@ -139,7 +147,7 @@ const MonthlySummary = () => {
 
 export default MonthlySummary;
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create((theme, miniRuntime) => ({
   headerContainer: {
     alignItems: "flex-start",
     width: "100%",
@@ -159,16 +167,32 @@ const styles = StyleSheet.create((theme) => ({
     fontSize: 12,
   },
   card: {
-    width: "100%",
     padding: 24,
-    gap: 2,
     borderRadius: 16,
     backgroundColor: theme.colors.card,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: theme.colors.divider,
+    gap: 2,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   cardTitle: {
-    fontWeight: 500,
-    fontSize: 14,
+    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
     color: theme.colors.body2,
+  },
+  link: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  linkText: {
+    fontFamily: "Inter-Light",
+    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
+    color: theme.colors.accent,
   },
   cardContent: {
     gap: 6,
@@ -187,5 +211,12 @@ const styles = StyleSheet.create((theme) => ({
   buttonsContainer: {
     gap: 8,
     width: "100%",
+  },
+  income: (value: number) => ({
+    color: value >= 0 ? theme.colors.gaining : theme.colors.losing,
+  }),
+  icon: {
+    color: theme.colors.accent,
+    height: miniRuntime.screen.width <= 640 ? 12 : 16,
   },
 }));

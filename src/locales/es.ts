@@ -41,6 +41,11 @@ const spanishTranslations = {
     requiredField: "Campo requerido",
     passwordMustMatch: "Las contraseñas deben coincidir",
     positiveValueExpected: "El valor debe ser mayor que 0",
+    changeMonth: "Cambiar Mes",
+    totalIncome: "Ingresos totales",
+    totalExpenses: "Gastos totales",
+    totalProfit: "Ganancias totales",
+    dailySummary: "Resumen Diario",
   },
 };
 

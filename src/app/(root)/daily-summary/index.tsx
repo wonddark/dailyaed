@@ -4,12 +4,13 @@ import Button from "@/components/button";
 import { StyleSheet } from "react-native-unistyles";
 import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { RootView, View } from "@/components/views";
-import { ActivityIndicator, Linking, Platform } from "react-native";
+import { ActivityIndicator, Linking, Platform, Pressable } from "react-native";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
 import { generateWSLink } from "@/utils/share-as-text";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 
 const DailySummary = () => {
   const { t, i18n } = useTranslation();
@@ -94,14 +95,33 @@ const DailySummary = () => {
               style={styles.dateLabel}
             >{`${t("today")} - ${currentDate}`}</Text>
             <Link href="/choose-date?pickDay=true" asChild>
-              <Button label={t("changeDate")} variant="link" size="small" />
+              <Pressable style={styles.link}>
+                <Text style={styles.linkText}>{t("changeDate")}</Text>
+                <SimpleLineIcons
+                  name="arrow-right"
+                  color={styles.icon.color}
+                  size={styles.icon.height}
+                />
+              </Pressable>
             </Link>
           </View>
         }
       />
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
+          <Link href="/edit-income" asChild>
+            <Pressable style={styles.link}>
+              <Text style={styles.linkText}>{t("editIncome")}</Text>
+              <SimpleLineIcons
+                name="arrow-right"
+                color={styles.icon.color}
+                size={styles.icon.height}
+              />
+            </Pressable>
+          </Link>
+        </View>
         <View style={styles.cardContent}>
           <Text style={styles.cardAmount}>
             {Intl.NumberFormat(locale, {
@@ -111,13 +131,22 @@ const DailySummary = () => {
           </Text>
           <Text style={styles.cardCurrency}>AED</Text>
         </View>
-        <Link href="/edit-income" asChild>
-          <Button label={t("editIncome")} variant="link" size="small" />
-        </Link>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
+        <View style={styles.cardHeader}>
+          <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
+          <Link href="/edit-expenses" asChild>
+            <Pressable style={styles.link}>
+              <Text style={styles.linkText}>{t("editExpenses")}</Text>
+              <SimpleLineIcons
+                name="arrow-right"
+                color={styles.icon.color}
+                size={styles.icon.height}
+              />
+            </Pressable>
+          </Link>
+        </View>
         <View style={styles.cardContent}>
           <Text style={styles.cardAmount}>
             {Intl.NumberFormat(locale, {
@@ -127,9 +156,6 @@ const DailySummary = () => {
           </Text>
           <Text style={styles.cardCurrency}>AED</Text>
         </View>
-        <Link href="/edit-expenses" asChild>
-          <Button label={t("editExpenses")} variant="link" size="small" />
-        </Link>
       </View>
 
       <View style={styles.card}>
@@ -180,10 +206,30 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     padding: 24,
     borderRadius: 16,
     backgroundColor: theme.colors.card,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: theme.colors.divider,
+    gap: 2,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: theme.colors.card,
   },
   cardTitle: {
-    fontSize: miniRuntime.screen.width >= 640 ? 12 : 14,
+    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
     color: theme.colors.body2,
+  },
+  link: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  linkText: {
+    fontFamily: "Inter-Light",
+    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
+    color: theme.colors.accent,
   },
   cardContent: {
     gap: 6,
@@ -206,4 +252,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   income: (value: number) => ({
     color: value >= 0 ? theme.colors.gaining : theme.colors.losing,
   }),
+  icon: {
+    color: theme.colors.accent,
+    height: miniRuntime.screen.width <= 640 ? 12 : 16,
+  },
 }));
