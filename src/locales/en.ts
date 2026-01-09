@@ -1,10 +1,10 @@
 const englishTranslations = {
   translation: {
     welcome: "Welcome to",
-    appName: "Daily AED",
-    appSlogan: "The easiest and fastest tool to track your money",
+    appName: "DailyAED",
+    appSlogan: "The simplest way to track your daily money",
     appTagline:
-      "No VAT, no Taxes, no distracting information; just input your income and expenses for an",
+      "No VAT, no taxes, no distractions. Just enter your daily income and expenses for an",
     easyAndFast: "easy and fast",
     profitCalculus: "profit calculation",
     shareSummary: "Share the daily or monthly summary in less than 3 seconds.",
@@ -35,11 +35,11 @@ const englishTranslations = {
     settingsSubtitle: "Configure the way you use this app",
     chooseDateSubtitle: "Select a date to display the resume",
     saveIncome: "Save Income",
-    tryAgain: "Tray Again",
+    tryAgain: "Try Again",
     signOut: "Sign Out",
     requiredField: "Required field",
     passwordMustMatch: "Passwords must match",
-    positiveValueExpected: "Value must be greater than 0",
+    positiveValueExpected: "Value must be greater than zero",
     changeMonth: "Change Month",
     totalIncome: "Total Income",
     totalExpenses: "Total Expenses",
