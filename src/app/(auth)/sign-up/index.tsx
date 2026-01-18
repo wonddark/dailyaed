@@ -130,7 +130,7 @@ const SignUp = () => {
               disabled={methods.formState.isSubmitting}
               loading={methods.formState.isSubmitting}
             />
-            <Link href="/sign-in" asChild>
+            <Link href="/sign-in" asChild dismissTo>
               <Button label="Sign In" variant="secondary" />
             </Link>
           </ButtonsContainer>

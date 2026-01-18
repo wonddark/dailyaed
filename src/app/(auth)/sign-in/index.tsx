@@ -107,7 +107,7 @@ export default function SignIn() {
               disabled={methods.formState.isSubmitting}
               loading={methods.formState.isSubmitting}
             />
-            <Link href="/sign-up" asChild>
+            <Link href="/sign-up" asChild dismissTo>
               <Button label={t("signUp")} variant="secondary" />
             </Link>
           </ButtonsContainer>
