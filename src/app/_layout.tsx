@@ -1,15 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
-import { StyleSheet } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import AuthProvider from "@/providers/auth-provider";
 import { useAuthContext } from "@/hooks/use-auth-context";
 import { SplashScreenController } from "@/components/SplashScreenController";
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
+  ThemeProvider
 } from "@react-navigation/native";
-import { useColorScheme } from "react-native";
 import "@/i18next";
 
 function RootLayout() {
@@ -62,12 +61,14 @@ function RootLayout() {
 }
 
 function ContextWrapper() {
-  const colorScheme = useColorScheme();
+  const {
+    rt: { colorScheme },
+  } = useUnistyles();
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <AuthProvider>
         <SplashScreenController />
-        <StatusBar style="auto" />
+        <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
         <RootLayout />
       </AuthProvider>
     </ThemeProvider>
