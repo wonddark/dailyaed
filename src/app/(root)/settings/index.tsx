@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
 import { Link, useRouter } from "expo-router";
 import Button from "@/components/button";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -36,17 +37,21 @@ const Settings = () => {
           subtitle={t("settingsSubtitle")}
           sideAction={false}
         />
-        <Button
-          onPress={onSignOut}
-          label={t("signOut")}
-          loading={status.loading}
-        />
-        <Link href="/daily-summary" asChild dismissTo>
-          <Button label={t("dailySummary")} variant="ghost" />
-        </Link>
+        <ButtonsContainer>
+          <Button
+            onPress={onSignOut}
+            label={t("signOut")}
+            loading={status.loading}
+          />
+          <Link href="/daily-summary" asChild dismissTo>
+            <Button label={t("dailySummary")} variant="secondary" />
+          </Link>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
 };
+
 export default Settings;
+
 const styles = StyleSheet.create(() => ({}));

@@ -36,11 +36,17 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "flex-start",
   },
   title: {
-    fontSize: 24,
+    fontSize: {
+      xs: 24,
+      lg: 32,
+    },
     fontWeight: 300,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: {
+      xs: 12,
+      lg: 14,
+    },
     color: theme.colors.muted,
   },
 }));

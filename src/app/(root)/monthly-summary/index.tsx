@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { generateWSLink } from "@/utils/share-as-text";
 import PageHeader from "@/components/PageHeader";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const MonthlySummary = () => {
   const { t } = useTranslation();
@@ -34,10 +35,10 @@ const MonthlySummary = () => {
     const response = await supabase
       .from("records")
       .select("income, expenses, profit, date")
-      .gt("date", dayjs(currentDate).set("day", 0).format("YYYY-MM-DD"))
+      .gt("date", currentDate.format("YYYY-MM") + "-01")
       .lt(
         "date",
-        dayjs(currentDate).add(1, "month").set("day", 1).format("YYYY-MM-DD"),
+        currentDate.format("YYYY-MM") + `-${currentDate.daysInMonth()}`,
       );
 
     if (response.data) {
@@ -142,12 +143,12 @@ const MonthlySummary = () => {
           </View>
         </View>
 
-        <View style={styles.buttonsContainer}>
+        <ButtonsContainer>
           <Button onPress={onShare} label={t("shareByWS")} />
           <Link href="/daily-summary" asChild dismissTo>
             <Button label={t("dailySummary")} variant="secondary" />
           </Link>
-        </View>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
@@ -215,10 +216,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   cardCurrency: {
     fontSize: 14,
     color: theme.colors.muted,
-  },
-  buttonsContainer: {
-    gap: 8,
-    width: "100%",
   },
   income: (value: number) => ({
     color: value >= 0 ? theme.colors.gaining : theme.colors.losing,

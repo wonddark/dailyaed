@@ -62,17 +62,18 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
           gap: 12,
         },
         default: {
-          borderRadius: miniRuntime.screen.width <= 640 ? 8 : 10,
-          paddingVertical: miniRuntime.screen.width <= 640 ? 12 : 16,
-          paddingHorizontal: miniRuntime.screen.width <= 640 ? 24 : 32,
-          gap: 8,
+          borderRadius: { xs: 4, lg: 6 },
+          paddingVertical: { xs: 12, lg: 10 },
+          paddingHorizontal: { xs: 24, lg: 20 },
+          gap: {
+            xs: 4,
+            lg: 6,
+          },
         },
       },
       color: {
         secondary: {
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: `${theme.colors.body2}99`,
+          backgroundColor: theme.colors.secondary,
         },
         ghost: {},
         link: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     variants: {
       color: {
         secondary: {
-          color: `${theme.colors.body2}99`,
+          color: theme.colors.secondaryContrast,
         },
         ghost: {
           color: theme.colors.primary,
@@ -105,13 +106,16 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
       },
       size: {
         small: {
-          fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
+          fontSize: { xs: 12, lg: 14 },
         },
         large: {
-          fontSize: miniRuntime.screen.width <= 640 ? 16 : 18,
+          fontSize: { xs: 16, lg: 18 },
         },
         default: {
-          fontSize: miniRuntime.screen.width <= 640 ? 14 : 16,
+          fontSize: {
+            xs: 12,
+            lg: 14,
+          },
         },
       },
     },

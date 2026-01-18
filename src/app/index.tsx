@@ -4,11 +4,15 @@ import { StyleSheet } from "react-native-unistyles";
 import { Link } from "expo-router";
 import { Platform } from "react-native";
 import Button from "@/components/button";
-import { View } from "@/components/views";
+import { RootView, View, WrapperView } from "@/components/views";
 import { useTranslation } from "react-i18next";
+import ButtonsContainer from "@/components/ButtonsContainer";
+import { Image } from "expo-image";
 
 const Welcome = () => {
   const { t } = useTranslation();
+  const blurhash =
+    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
 
   useEffect(() => {
     if (Platform.OS === "web" && document !== undefined) {
@@ -17,27 +21,46 @@ const Welcome = () => {
   }, []);
 
   return (
-    <>
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          {t("welcome")} <Text style={styles.appName}>{t("appName")}</Text>
-        </Text>
-        <Text style={styles.subtitle}>{t("appSlogan")}</Text>
-      </View>
-      <Text style={styles.headline}>
-        {t("appTagline")}{" "}
-        <Text style={styles.semiBolded}>{t("easyAndFast")}</Text>{" "}
-        {t("profitCalculus")}.
-      </Text>
-      <View style={styles.buttonsContainer}>
-        <Link href="/sign-up" asChild>
-          <Button label={t("createAccount")} />
-        </Link>
-        <Link href="/sign-in" asChild>
-          <Button label={t("signIn")} variant="secondary" />
-        </Link>
-      </View>
-    </>
+    <RootView>
+      <WrapperView>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            {t("welcome")} <Text style={styles.appName}>{t("appName")}</Text>
+          </Text>
+          <Text style={styles.subtitle}>{t("appSlogan")}</Text>
+        </View>
+        <View style={{ flex: 1, gap: 32 }}>
+          <View
+            style={{
+              flex: 1,
+              maxHeight: 400,
+              gap: 8,
+            }}
+          >
+            <Image
+              source={require("../../assets/welcome.jpg")}
+              style={styles.image}
+              contentFit="cover"
+              placeholder={{ blurhash }}
+              alt="Welcome to DailyAED!"
+            />
+            <Text style={styles.headline}>
+              {t("appTagline")}{" "}
+              <Text style={styles.bolded}>{t("easyAndFast")}</Text>{" "}
+              {t("profitCalculus")}.
+            </Text>
+          </View>
+          <ButtonsContainer>
+            <Link href="/sign-up" asChild>
+              <Button label={t("createAccount")} />
+            </Link>
+            <Link href="/sign-in" asChild>
+              <Button label={t("signIn")} variant="secondary" />
+            </Link>
+          </ButtonsContainer>
+        </View>
+      </WrapperView>
+    </RootView>
   );
 };
 
@@ -45,10 +68,13 @@ export default Welcome;
 
 const styles = StyleSheet.create((theme, miniRuntime) => ({
   header: {
-    marginVertical: 32,
+    marginVertical: 40,
   },
   title: {
-    fontSize: 24,
+    fontSize: {
+      xs: 40,
+      lg: 60,
+    },
     fontWeight: 300,
     textAlign: "center",
   },
@@ -57,24 +83,20 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.primary,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: { xs: 14, lg: 16 },
     color: theme.colors.muted,
     textAlign: "center",
   },
   headline: {
     fontWeight: 300,
     textAlign: "center",
+    fontSize: {
+      xs: 16,
+      lg: 20,
+    },
   },
-  semiBolded: {
-    fontWeight: 600,
-  },
-  buttonsContainer: {
-    width: "100%",
-    minWidth: 160,
-    maxWidth: 370,
-    marginTop: 64,
-    gap: 8,
-    marginHorizontal: "auto",
+  bolded: {
+    fontWeight: 700,
   },
   buttonText: {
     fontWeight: 500,
@@ -85,5 +107,9 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   secondaryButtonText: {
     color: theme.colors.primary,
+  },
+  image: {
+    flex: 1,
+    width: "100%",
   },
 }));

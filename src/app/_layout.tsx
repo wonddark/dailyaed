@@ -7,7 +7,7 @@ import { SplashScreenController } from "@/components/SplashScreenController";
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@react-navigation/native";
 import "@/i18next";
 

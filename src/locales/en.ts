@@ -4,8 +4,8 @@ const englishTranslations = {
     appName: "DailyAED",
     appSlogan: "The simplest way to track your daily money",
     appTagline:
-      "No VAT, no taxes, no distractions. Just enter your daily income and expenses for an",
-    easyAndFast: "easy and fast",
+      "No accounting. No complexity. Just your income and expenses for a",
+    easyAndFast: "fast and automatic",
     profitCalculus: "profit calculation",
     shareSummary: "Share the daily or monthly summary in less than 3 seconds.",
     signIn: "Sign In",

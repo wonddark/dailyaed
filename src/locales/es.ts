@@ -4,9 +4,9 @@ const spanishTranslations = {
     appName: "Daily AED",
     appSlogan: "La herramienta más fácil y rápida para controlar tu dinero",
     appTagline:
-      "Sin VAT, sin impuestos, sin distracciones; solo ingresa tus ingresos y tus gastos para un",
+      "Sin contabilidad. Sin complejidad. Solo tus ingresos y gastos para un cálculo",
     easyAndFast: "sencillo y rápido",
-    profitCalculus: "cálculo de tus ganancias",
+    profitCalculus: "de tus ganancias",
     shareSummary:
       "Comparte el resumen diario o mensual en menos de 3 segundos.",
     signIn: "Entrar",

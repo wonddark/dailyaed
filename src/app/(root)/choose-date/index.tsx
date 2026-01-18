@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
-import { RootView, View, WrapperView } from "@/components/views";
+import { RootView, WrapperView } from "@/components/views";
 import { Platform } from "react-native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import Button from "@/components/button";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import dayjs, { Dayjs } from "dayjs";
 import PageHeader from "@/components/PageHeader";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const ChooseDate = () => {
   const { t, i18n } = useTranslation();
@@ -102,7 +103,7 @@ const ChooseDate = () => {
           />
         )}
 
-        <View style={styles.buttonsContainer}>
+        <ButtonsContainer>
           <Link
             href={
               pickDay
@@ -119,7 +120,7 @@ const ChooseDate = () => {
             label={t("cancel")}
             variant="ghost"
           />
-        </View>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
@@ -204,9 +205,5 @@ const styles = StyleSheet.create((theme) => ({
   },
   button_next_image: {
     color: theme.colors.body,
-  },
-  buttonsContainer: {
-    gap: 8,
-    width: "100%",
   },
 }));

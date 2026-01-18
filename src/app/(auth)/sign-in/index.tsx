@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 export default function SignIn() {
   const { t } = useTranslation();
@@ -62,42 +63,44 @@ export default function SignIn() {
 
         <View style={styles.formContainer}>
           {error ? <InlineAlert message={t("wrongCredentials")} /> : null}
-          <Controller
-            control={methods.control}
-            name="identifier"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  placeholder={t("phoneOrEmail")}
-                />
-                {invalid ? (
-                  <Text style={styles.helperText}>{error?.message}</Text>
-                ) : null}
-              </View>
-            )}
-          />
+          <View style={styles.inputWrapper}>
+            <Controller
+              control={methods.control}
+              name="identifier"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    placeholder={t("phoneOrEmail")}
+                  />
+                  {invalid ? (
+                    <Text style={styles.helperText}>{error?.message}</Text>
+                  ) : null}
+                </View>
+              )}
+            />
 
-          <Controller
-            control={methods.control}
-            name="password"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  placeholder="********"
-                  secureTextEntry
-                />
-                {invalid ? (
-                  <Text style={styles.helperText}>{error?.message}</Text>
-                ) : null}
-              </View>
-            )}
-          />
+            <Controller
+              control={methods.control}
+              name="password"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    placeholder="********"
+                    secureTextEntry
+                  />
+                  {invalid ? (
+                    <Text style={styles.helperText}>{error?.message}</Text>
+                  ) : null}
+                </View>
+              )}
+            />
+          </View>
 
-          <View style={styles.buttonsContainer}>
+          <ButtonsContainer>
             <Button
               label={t("enter")}
               onPress={onSignIn}
@@ -105,9 +108,9 @@ export default function SignIn() {
               loading={methods.formState.isSubmitting}
             />
             <Link href="/sign-up" asChild>
-              <Button label={t("signUp")} variant="ghost" />
+              <Button label={t("signUp")} variant="secondary" />
             </Link>
-          </View>
+          </ButtonsContainer>
         </View>
       </WrapperView>
     </RootView>
@@ -116,15 +119,23 @@ export default function SignIn() {
 
 const styles = StyleSheet.create((theme, miniRuntime) => ({
   formContainer: {
-    width: "100%",
-    maxWidth: 540,
-    gap: 24,
+    gap: {
+      xs: 32,
+      lg: 40,
+    },
+    maxWidth: 480,
   },
-  buttonsContainer: {
-    gap: 12,
+  formFields: {
+    gap: {
+      xs: 8,
+      lg: 12,
+    },
   },
   inputWrapper: {
-    gap: 2,
+    gap: {
+      xs: 2,
+      lg: 12,
+    },
   },
   helperText: {
     color: theme.colors.losing,

@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
 import { generateWSLink } from "@/utils/share-as-text";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const DailySummary = () => {
   const { t, i18n } = useTranslation();
@@ -115,75 +116,77 @@ const DailySummary = () => {
           }
         />
 
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
-            <Link href="/edit-income" asChild>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>{t("editIncome")}</Text>
-                <SimpleLineIcons
-                  name="arrow-right"
-                  color={styles.icon.color}
-                  size={styles.icon.height}
-                />
-              </Pressable>
-            </Link>
+        <View style={styles.cardsContainer}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
+              <Link href="/edit-income" asChild>
+                <Pressable style={styles.link}>
+                  <Text style={styles.linkText}>{t("editIncome")}</Text>
+                  <SimpleLineIcons
+                    name="arrow-right"
+                    color={styles.icon.color}
+                    size={styles.icon.height}
+                  />
+                </Pressable>
+              </Link>
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardAmount}>
+                {Intl.NumberFormat(locale, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(data.income)}
+              </Text>
+              <Text style={styles.cardCurrency}>AED</Text>
+            </View>
           </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardAmount}>
-              {Intl.NumberFormat(locale, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(data.income)}
-            </Text>
-            <Text style={styles.cardCurrency}>AED</Text>
+
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
+              <Link href="/edit-expenses" asChild>
+                <Pressable style={styles.link}>
+                  <Text style={styles.linkText}>{t("editExpenses")}</Text>
+                  <SimpleLineIcons
+                    name="arrow-right"
+                    color={styles.icon.color}
+                    size={styles.icon.height}
+                  />
+                </Pressable>
+              </Link>
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardAmount}>
+                {Intl.NumberFormat(locale, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(data.expenses)}
+              </Text>
+              <Text style={styles.cardCurrency}>AED</Text>
+            </View>
+          </View>
+
+          <View style={[styles.card, styles.bigCard]}>
+            <Text style={styles.cardTitle}>{t("todayProfit")}</Text>
+            <View style={styles.cardContent}>
+              <Text style={[styles.cardAmount, styles.income(data.profit)]}>
+                {Intl.NumberFormat(locale, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(data.profit)}
+              </Text>
+              <Text style={styles.cardCurrency}>AED</Text>
+            </View>
           </View>
         </View>
 
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
-            <Link href="/edit-expenses" asChild>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>{t("editExpenses")}</Text>
-                <SimpleLineIcons
-                  name="arrow-right"
-                  color={styles.icon.color}
-                  size={styles.icon.height}
-                />
-              </Pressable>
-            </Link>
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardAmount}>
-              {Intl.NumberFormat(locale, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(data.expenses)}
-            </Text>
-            <Text style={styles.cardCurrency}>AED</Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("todayProfit")}</Text>
-          <View style={styles.cardContent}>
-            <Text style={[styles.cardAmount, styles.income(data.profit)]}>
-              {Intl.NumberFormat(locale, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }).format(data.profit)}
-            </Text>
-            <Text style={styles.cardCurrency}>AED</Text>
-          </View>
-        </View>
-
-        <View style={styles.buttonsContainer}>
+        <ButtonsContainer>
           <Button onPress={onShare} label={t("shareByWS")} />
           <Link href="/monthly-summary" asChild>
             <Button label={t("monthlySummary")} variant="secondary" />
           </Link>
-        </View>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
@@ -208,16 +211,41 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   dateLabel: {
     opacity: 0.55,
-    fontSize: 12,
+    fontSize: {
+      xs: 12,
+      lg: 14,
+    },
+  },
+  cardsContainer: {
+    flexDirection: {
+      xs: "column",
+      lg: "row",
+    },
+    flexWrap: {
+      xs: undefined,
+      lg: "wrap",
+    },
+    gap: {
+      xs: 16,
+      lg: 20,
+    },
   },
   card: {
     padding: 24,
-    borderRadius: 16,
+    borderRadius: 10,
     backgroundColor: theme.colors.card,
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: theme.colors.divider,
     gap: 2,
+    flex: {
+      xs: undefined,
+      lg: 1,
+    },
+  },
+  bigCard: {
+    width: "100%",
+    flex: undefined,
   },
   cardHeader: {
     flexDirection: "row",
@@ -226,7 +254,10 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     backgroundColor: theme.colors.card,
   },
   cardTitle: {
-    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
+    fontSize: {
+      xs: 12,
+      lg: 16,
+    },
     color: theme.colors.body2,
   },
   link: {
@@ -236,7 +267,10 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   linkText: {
     fontFamily: "Inter-Light",
-    fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
+    fontSize: {
+      xs: 12,
+      lg: 16,
+    },
     color: theme.colors.accent,
   },
   cardContent: {
@@ -247,21 +281,23 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   cardAmount: {
     fontFamily: "Poppins-Light",
-    fontSize: 36,
+    fontSize: {
+      xs: 36,
+      lg: 60,
+    },
   },
   cardCurrency: {
-    fontSize: 14,
+    fontSize: { xs: 14, lg: 16 },
     color: theme.colors.muted,
-  },
-  buttonsContainer: {
-    gap: 8,
-    width: "100%",
   },
   income: (value: number) => ({
     color: value >= 0 ? theme.colors.gaining : theme.colors.losing,
   }),
   icon: {
     color: theme.colors.accent,
-    height: miniRuntime.screen.width <= 640 ? 12 : 16,
+    height: {
+      xs: 12,
+      lg: 14,
+    },
   },
 }));

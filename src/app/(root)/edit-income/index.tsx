@@ -12,6 +12,7 @@ import PageHeader from "@/components/PageHeader";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const EditIncome = () => {
   const { replace } = useRouter();
@@ -141,7 +142,7 @@ const EditIncome = () => {
             </View>
           )}
         />
-        <View style={styles.buttonsContainer}>
+        <ButtonsContainer>
           <Button
             label={t("saveIncome")}
             onPress={onSave}
@@ -151,7 +152,7 @@ const EditIncome = () => {
           <Link href="/daily-summary" asChild replace>
             <Button label={t("cancel")} variant="ghost" />
           </Link>
-        </View>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
@@ -174,9 +175,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   dateLabel: {
     opacity: 0.55,
     fontSize: 12,
-  },
-  buttonsContainer: {
-    gap: 8,
   },
   loader: {
     color: theme.colors.body2,

@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -122,7 +123,7 @@ const SignUp = () => {
             />
           </View>
 
-          <View style={styles.formActions}>
+          <ButtonsContainer>
             <Button
               label={t("start")}
               onPress={onSubmit}
@@ -130,9 +131,9 @@ const SignUp = () => {
               loading={methods.formState.isSubmitting}
             />
             <Link href="/sign-in" asChild>
-              <Button label="Sign In" variant="ghost" />
+              <Button label="Sign In" variant="secondary" />
             </Link>
-          </View>
+          </ButtonsContainer>
         </View>
       </WrapperView>
     </RootView>
@@ -143,18 +144,23 @@ export default SignUp;
 
 const styles = StyleSheet.create((theme, miniRuntime) => ({
   formContainer: {
-    width: "100%",
-    maxWidth: 540,
-    gap: 24,
+    gap: {
+      xs: 32,
+      lg: 40,
+    },
+    maxWidth: 480,
   },
   formFields: {
-    gap: 12,
-  },
-  formActions: {
-    gap: 12,
+    gap: {
+      xs: 8,
+      lg: 12,
+    },
   },
   inputWrapper: {
-    gap: 2,
+    gap: {
+      xs: 2,
+      lg: 4,
+    },
   },
   helperText: {
     color: theme.colors.losing,

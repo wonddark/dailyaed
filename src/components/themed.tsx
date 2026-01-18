@@ -40,13 +40,23 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   textInput: {
     fontFamily: "Poppins",
-    fontSize: miniRuntime.screen.width <= 640 ? 14 : 16,
+    fontSize: {
+      xs: 13,
+      lg: 15,
+    },
     color: theme.colors.body,
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: theme.colors.inputBorder,
-    borderRadius: miniRuntime.screen.width <= 640 ? 16 : 18,
-    padding: miniRuntime.screen.width <= 640 ? 16 : 18,
+    borderRadius: {
+      xs: 8,
+      lg: 8,
+    },
+    padding: {
+      xs: 12,
+      lg: 10,
+    },
+    textAlignVertical: "center",
   },
   placeholder: {
     color: theme.colors.muted,

@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import ButtonsContainer from "@/components/ButtonsContainer";
 
 const EditExpenses = () => {
   const { t } = useTranslation();
@@ -138,12 +139,12 @@ const EditExpenses = () => {
             </View>
           )}
         />
-        <View style={styles.buttonsContainer}>
+        <ButtonsContainer>
           <Button label="Save Expenses" onPress={onSave} />
           <Link href="/daily-summary" asChild replace>
             <Button label="Cancel" variant="ghost" />
           </Link>
-        </View>
+        </ButtonsContainer>
       </WrapperView>
     </RootView>
   );
@@ -165,9 +166,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   dateLabel: {
     opacity: 0.55,
     fontSize: 12,
-  },
-  buttonsContainer: {
-    gap: 8,
   },
   inputWrapper: {
     gap: 2,
