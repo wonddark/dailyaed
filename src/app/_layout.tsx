@@ -67,8 +67,8 @@ function ContextWrapper() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <AuthProvider>
         <SplashScreenController />
-        <RootLayout />
         <StatusBar style="auto" />
+        <RootLayout />
       </AuthProvider>
     </ThemeProvider>
   );

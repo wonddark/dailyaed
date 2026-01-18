@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput } from "@/components/themed";
 import { StyleSheet } from "react-native-unistyles";
-import { InlineAlert, RootView, View } from "@/components/views";
+import { InlineAlert, RootView, View, WrapperView } from "@/components/views";
 import { Link, useRouter } from "expo-router";
 import Button from "@/components/button";
 import { Controller, useForm } from "react-hook-form";
@@ -86,8 +86,12 @@ const EditIncome = () => {
 
   if (status.loading) {
     return (
-      <RootView style={styles.rootLoading}>
-        <ActivityIndicator size="large" color={styles.loader.color} />
+      <RootView>
+        <WrapperView>
+          <View center="all">
+            <ActivityIndicator size="large" color={styles.loader.color} />
+          </View>
+        </WrapperView>
       </RootView>
     );
   }
@@ -95,56 +99,60 @@ const EditIncome = () => {
   if (!methods.formState.isSubmitted && status.error) {
     return (
       <RootView>
-        <InlineAlert message="There was an error when loading the data. Please try in a few seconds." />
-        <Button label={t("tryAgain")} onPress={getStoreData} />
+        <WrapperView>
+          <InlineAlert message="There was an error when loading the data. Please try in a few seconds." />
+          <Button label={t("tryAgain")} onPress={getStoreData} />
+        </WrapperView>
       </RootView>
     );
   }
 
   return (
     <RootView>
-      <PageHeader
-        title={t("editIncome")}
-        subtitle={dayjs().format("MMM DD")}
-        sideAction={false}
-      />
-
-      {status.error ? (
-        <InlineAlert message="There was an error when saving the income. We will try again later." />
-      ) : null}
-      <Controller
-        control={methods.control}
-        name="income"
-        render={({ field, fieldState: { invalid, error } }) => (
-          <View style={styles.inputWrapper}>
-            <TextInput
-              value={`${field.value}`}
-              onChangeText={(txt) => {
-                if (
-                  (!txt.endsWith(".") || !txt.endsWith(",")) &&
-                  !isNaN(Number(txt))
-                ) {
-                  field.onChange(txt);
-                }
-              }}
-            />
-            {invalid ? (
-              <Text style={styles.helperText}>{error?.message}</Text>
-            ) : null}
-          </View>
-        )}
-      />
-      <View style={styles.buttonsContainer}>
-        <Button
-          label={t("saveIncome")}
-          onPress={onSave}
-          loading={methods.formState.isSubmitting}
-          disabled={methods.formState.isSubmitting}
+      <WrapperView>
+        <PageHeader
+          title={t("editIncome")}
+          subtitle={dayjs().format("MMM DD")}
+          sideAction={false}
         />
-        <Link href="/daily-summary" asChild replace>
-          <Button label={t("cancel")} variant="ghost" />
-        </Link>
-      </View>
+
+        {status.error ? (
+          <InlineAlert message="There was an error when saving the income. We will try again later." />
+        ) : null}
+        <Controller
+          control={methods.control}
+          name="income"
+          render={({ field, fieldState: { invalid, error } }) => (
+            <View style={styles.inputWrapper}>
+              <TextInput
+                value={`${field.value}`}
+                onChangeText={(txt) => {
+                  if (
+                    (!txt.endsWith(".") || !txt.endsWith(",")) &&
+                    !isNaN(Number(txt))
+                  ) {
+                    field.onChange(txt);
+                  }
+                }}
+              />
+              {invalid ? (
+                <Text style={styles.helperText}>{error?.message}</Text>
+              ) : null}
+            </View>
+          )}
+        />
+        <View style={styles.buttonsContainer}>
+          <Button
+            label={t("saveIncome")}
+            onPress={onSave}
+            loading={methods.formState.isSubmitting}
+            disabled={methods.formState.isSubmitting}
+          />
+          <Link href="/daily-summary" asChild replace>
+            <Button label={t("cancel")} variant="ghost" />
+          </Link>
+        </View>
+      </WrapperView>
     </RootView>
   );
 };
@@ -169,10 +177,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   buttonsContainer: {
     gap: 8,
-  },
-  rootLoading: {
-    justifyContent: "center",
-    alignItems: "center",
   },
   loader: {
     color: theme.colors.body2,

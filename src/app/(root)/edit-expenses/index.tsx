@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput } from "@/components/themed";
 import { StyleSheet } from "react-native-unistyles";
-import { InlineAlert, RootView, View } from "@/components/views";
+import { InlineAlert, RootView, View, WrapperView } from "@/components/views";
 import { Link, useRouter } from "expo-router";
 import Button from "@/components/button";
 import { Controller, useForm } from "react-hook-form";
@@ -86,7 +86,11 @@ const EditExpenses = () => {
   if (status.loading) {
     return (
       <RootView>
-        <ActivityIndicator size="large" />
+        <WrapperView>
+          <View center="all">
+            <ActivityIndicator size="large" />
+          </View>
+        </WrapperView>
       </RootView>
     );
   }
@@ -94,49 +98,53 @@ const EditExpenses = () => {
   if (!methods.formState.isSubmitted && status.error) {
     return (
       <RootView>
-        <InlineAlert message="There was an error when loading the data. Please try in a few seconds." />
-        <Button label="Try again" onPress={getStoreData} />
+        <WrapperView>
+          <InlineAlert message="There was an error when loading the data. Please try in a few seconds." />
+          <Button label="Try again" onPress={getStoreData} />
+        </WrapperView>
       </RootView>
     );
   }
 
   return (
     <RootView>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Edit Expenses</Text>
-        <Text style={styles.dateLabel}>Today - Jan 02</Text>
-      </View>
-      {status.error ? (
-        <InlineAlert message="There was an error when saving the expenses. We will try again later." />
-      ) : null}
-      <Controller
-        control={methods.control}
-        name="expenses"
-        render={({ field, fieldState: { invalid, error } }) => (
-          <View style={styles.inputWrapper}>
-            <TextInput
-              value={`${field.value}`}
-              onChangeText={(txt) => {
-                if (
-                  (!txt.endsWith(".") || !txt.endsWith(",")) &&
-                  !isNaN(Number(txt))
-                ) {
-                  field.onChange(txt);
-                }
-              }}
-            />
-            {invalid ? (
-              <Text style={styles.helperText}>{error?.message}</Text>
-            ) : null}
-          </View>
-        )}
-      />
-      <View style={styles.buttonsContainer}>
-        <Button label="Save Expenses" onPress={onSave} />
-        <Link href="/daily-summary" asChild replace>
-          <Button label="Cancel" variant="ghost" />
-        </Link>
-      </View>
+      <WrapperView>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Edit Expenses</Text>
+          <Text style={styles.dateLabel}>Today - Jan 02</Text>
+        </View>
+        {status.error ? (
+          <InlineAlert message="There was an error when saving the expenses. We will try again later." />
+        ) : null}
+        <Controller
+          control={methods.control}
+          name="expenses"
+          render={({ field, fieldState: { invalid, error } }) => (
+            <View style={styles.inputWrapper}>
+              <TextInput
+                value={`${field.value}`}
+                onChangeText={(txt) => {
+                  if (
+                    (!txt.endsWith(".") || !txt.endsWith(",")) &&
+                    !isNaN(Number(txt))
+                  ) {
+                    field.onChange(txt);
+                  }
+                }}
+              />
+              {invalid ? (
+                <Text style={styles.helperText}>{error?.message}</Text>
+              ) : null}
+            </View>
+          )}
+        />
+        <View style={styles.buttonsContainer}>
+          <Button label="Save Expenses" onPress={onSave} />
+          <Link href="/daily-summary" asChild replace>
+            <Button label="Cancel" variant="ghost" />
+          </Link>
+        </View>
+      </WrapperView>
     </RootView>
   );
 };

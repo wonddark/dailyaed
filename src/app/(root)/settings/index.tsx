@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
-import { RootView } from "@/components/views";
+import { RootView, WrapperView } from "@/components/views";
 import PageHeader from "@/components/PageHeader";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
@@ -30,19 +30,21 @@ const Settings = () => {
 
   return (
     <RootView>
-      <PageHeader
-        title={t("settings")}
-        subtitle={t("settingsSubtitle")}
-        sideAction={false}
-      />
-      <Button
-        onPress={onSignOut}
-        label={t("signOut")}
-        loading={status.loading}
-      />
-      <Link href="/daily-summary" asChild dismissTo>
-        <Button label={t("dailySummary")} variant="ghost" />
-      </Link>
+      <WrapperView>
+        <PageHeader
+          title={t("settings")}
+          subtitle={t("settingsSubtitle")}
+          sideAction={false}
+        />
+        <Button
+          onPress={onSignOut}
+          label={t("signOut")}
+          loading={status.loading}
+        />
+        <Link href="/daily-summary" asChild dismissTo>
+          <Button label={t("dailySummary")} variant="ghost" />
+        </Link>
+      </WrapperView>
     </RootView>
   );
 };

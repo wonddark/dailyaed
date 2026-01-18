@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
-import { RootView, View } from "@/components/views";
+import { RootView, View, WrapperView } from "@/components/views";
 import { Platform } from "react-native";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import Button from "@/components/button";
@@ -36,85 +36,91 @@ const ChooseDate = () => {
 
   return (
     <RootView>
-      <PageHeader
-        title={t("chooseDate")}
-        subtitle={t("chooseDateSubtitle")}
-        sideAction={false}
-      />
-
-      {pickDay ? (
-        <DateTimePicker
-          mode="single"
-          date={selected}
-          onChange={onChangeDate}
-          onMonthChange={onMonthChange}
-          onYearChange={onYearChange}
-          styles={styles}
-          style={styles.calendar}
-          locale={i18n.resolvedLanguage}
-          disabledDates={(date) => dayjs(date).isAfter(dayjs(), "day")}
-          components={{
-            IconNext: (
-              <SimpleLineIcons
-                name="arrow-right"
-                size={14}
-                color={styles.button_next_image.color}
-              />
-            ),
-            IconPrev: (
-              <SimpleLineIcons
-                name="arrow-left"
-                size={12}
-                color={styles.button_prev_image.color}
-              />
-            ),
-          }}
+      <WrapperView>
+        <PageHeader
+          title={t("chooseDate")}
+          subtitle={t("chooseDateSubtitle")}
+          sideAction={false}
         />
-      ) : (
-        <DateTimePicker
-          mode="range"
-          startDate={selected.date(1)}
-          endDate={selected.date(selected.daysInMonth())}
-          onMonthChange={onMonthChange}
-          onYearChange={onYearChange}
-          styles={styles}
-          style={styles.calendar}
-          locale={i18n.resolvedLanguage}
-          disabledDates={(date) => dayjs(date).isAfter(dayjs(), "day")}
-          initialView={pickDay ? "day" : "month"}
-          components={{
-            IconNext: (
-              <SimpleLineIcons
-                name="arrow-right"
-                size={14}
-                color={styles.button_next_image.color}
-              />
-            ),
-            IconPrev: (
-              <SimpleLineIcons
-                name="arrow-left"
-                size={12}
-                color={styles.button_prev_image.color}
-              />
-            ),
-          }}
-        />
-      )}
 
-      <View style={styles.buttonsContainer}>
-        <Link
-          href={
-            pickDay
-              ? `/daily-summary?date=${selected.format("YYYY-MM-DD")}`
-              : `/monthly-summary?date=${selected.format("YYYY-MM")}`
-          }
-          asChild
-          dismissTo
-        >
-          <Button label={t("apply")} />
-        </Link>
-        <Button onPress={() => dismiss()} label={t("cancel")} variant="ghost" />
-      </View>
+        {pickDay ? (
+          <DateTimePicker
+            mode="single"
+            date={selected}
+            onChange={onChangeDate}
+            onMonthChange={onMonthChange}
+            onYearChange={onYearChange}
+            styles={styles}
+            style={styles.calendar}
+            locale={i18n.resolvedLanguage}
+            disabledDates={(date) => dayjs(date).isAfter(dayjs(), "day")}
+            components={{
+              IconNext: (
+                <SimpleLineIcons
+                  name="arrow-right"
+                  size={14}
+                  color={styles.button_next_image.color}
+                />
+              ),
+              IconPrev: (
+                <SimpleLineIcons
+                  name="arrow-left"
+                  size={12}
+                  color={styles.button_prev_image.color}
+                />
+              ),
+            }}
+          />
+        ) : (
+          <DateTimePicker
+            mode="range"
+            startDate={selected.date(1)}
+            endDate={selected.date(selected.daysInMonth())}
+            onMonthChange={onMonthChange}
+            onYearChange={onYearChange}
+            styles={styles}
+            style={styles.calendar}
+            locale={i18n.resolvedLanguage}
+            disabledDates={(date) => dayjs(date).isAfter(dayjs(), "day")}
+            initialView={pickDay ? "day" : "month"}
+            components={{
+              IconNext: (
+                <SimpleLineIcons
+                  name="arrow-right"
+                  size={14}
+                  color={styles.button_next_image.color}
+                />
+              ),
+              IconPrev: (
+                <SimpleLineIcons
+                  name="arrow-left"
+                  size={12}
+                  color={styles.button_prev_image.color}
+                />
+              ),
+            }}
+          />
+        )}
+
+        <View style={styles.buttonsContainer}>
+          <Link
+            href={
+              pickDay
+                ? `/daily-summary?date=${selected.format("YYYY-MM-DD")}`
+                : `/monthly-summary?date=${selected.format("YYYY-MM")}`
+            }
+            asChild
+            dismissTo
+          >
+            <Button label={t("apply")} />
+          </Link>
+          <Button
+            onPress={() => dismiss()}
+            label={t("cancel")}
+            variant="ghost"
+          />
+        </View>
+      </WrapperView>
     </RootView>
   );
 };

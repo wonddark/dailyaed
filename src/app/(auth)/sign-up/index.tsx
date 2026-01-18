@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles";
 import { Link, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { Controller, useForm } from "react-hook-form";
-import { InlineAlert, RootView, View } from "@/components/views";
+import { InlineAlert, RootView, View, WrapperView } from "@/components/views";
 import { Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
@@ -58,81 +58,83 @@ const SignUp = () => {
 
   return (
     <RootView>
-      <PageHeader
-        title={t("signUp")}
-        subtitle={t("signUpBenefit")}
-        sideAction={false}
-      />
+      <WrapperView>
+        <PageHeader
+          title={t("signUp")}
+          subtitle={t("signUpBenefit")}
+          sideAction={false}
+        />
 
-      <View style={styles.formContainer}>
-        <View style={styles.formFields}>
-          {error ? <InlineAlert message={t("errorTryAgain")} /> : null}
-          <Controller
-            control={methods.control}
-            name="identifier"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  placeholder={t("phoneOrEmail")}
-                  value={field.value}
-                  onChangeText={field.onChange}
-                />
-                {invalid ? (
-                  <Text style={styles.helperText}>{error?.message}</Text>
-                ) : null}
-              </View>
-            )}
-          />
+        <View style={styles.formContainer}>
+          <View style={styles.formFields}>
+            {error ? <InlineAlert message={t("errorTryAgain")} /> : null}
+            <Controller
+              control={methods.control}
+              name="identifier"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    placeholder={t("phoneOrEmail")}
+                    value={field.value}
+                    onChangeText={field.onChange}
+                  />
+                  {invalid ? (
+                    <Text style={styles.helperText}>{error?.message}</Text>
+                  ) : null}
+                </View>
+              )}
+            />
 
-          <Controller
-            control={methods.control}
-            name="password"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  secureTextEntry
-                  placeholder="Password"
-                />
-                {invalid ? (
-                  <Text style={styles.helperText}>{error?.message}</Text>
-                ) : null}
-              </View>
-            )}
-          />
+            <Controller
+              control={methods.control}
+              name="password"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    secureTextEntry
+                    placeholder="Password"
+                  />
+                  {invalid ? (
+                    <Text style={styles.helperText}>{error?.message}</Text>
+                  ) : null}
+                </View>
+              )}
+            />
 
-          <Controller
-            control={methods.control}
-            name="confirmPassword"
-            render={({ field, fieldState: { invalid, error } }) => (
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  secureTextEntry
-                  placeholder="Confirm password"
-                />
-                {invalid ? (
-                  <Text style={styles.helperText}>{error?.message}</Text>
-                ) : null}
-              </View>
-            )}
-          />
+            <Controller
+              control={methods.control}
+              name="confirmPassword"
+              render={({ field, fieldState: { invalid, error } }) => (
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    secureTextEntry
+                    placeholder="Confirm password"
+                  />
+                  {invalid ? (
+                    <Text style={styles.helperText}>{error?.message}</Text>
+                  ) : null}
+                </View>
+              )}
+            />
+          </View>
+
+          <View style={styles.formActions}>
+            <Button
+              label={t("start")}
+              onPress={onSubmit}
+              disabled={methods.formState.isSubmitting}
+              loading={methods.formState.isSubmitting}
+            />
+            <Link href="/sign-in" asChild>
+              <Button label="Sign In" variant="ghost" />
+            </Link>
+          </View>
         </View>
-
-        <View style={styles.formActions}>
-          <Button
-            label={t("start")}
-            onPress={onSubmit}
-            disabled={methods.formState.isSubmitting}
-            loading={methods.formState.isSubmitting}
-          />
-          <Link href="/sign-in" asChild>
-            <Button label="Sign In" variant="ghost" />
-          </Link>
-        </View>
-      </View>
+      </WrapperView>
     </RootView>
   );
 };

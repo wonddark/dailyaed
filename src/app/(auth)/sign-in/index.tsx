@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles";
 import { Link, useRouter } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { Controller, useForm } from "react-hook-form";
-import { InlineAlert, RootView, View } from "@/components/views";
+import { InlineAlert, RootView, View, WrapperView } from "@/components/views";
 import { Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
@@ -53,61 +53,63 @@ export default function SignIn() {
 
   return (
     <RootView>
-      <PageHeader
-        title={t("signIn")}
-        subtitle={t("signInBenefit")}
-        sideAction={false}
-      />
-
-      <View style={styles.formContainer}>
-        {error ? <InlineAlert message={t("wrongCredentials")} /> : null}
-        <Controller
-          control={methods.control}
-          name="identifier"
-          render={({ field, fieldState: { invalid, error } }) => (
-            <View style={styles.inputWrapper}>
-              <TextInput
-                value={field.value}
-                onChangeText={field.onChange}
-                placeholder={t("phoneOrEmail")}
-              />
-              {invalid ? (
-                <Text style={styles.helperText}>{error?.message}</Text>
-              ) : null}
-            </View>
-          )}
+      <WrapperView>
+        <PageHeader
+          title={t("signIn")}
+          subtitle={t("signInBenefit")}
+          sideAction={false}
         />
 
-        <Controller
-          control={methods.control}
-          name="password"
-          render={({ field, fieldState: { invalid, error } }) => (
-            <View style={styles.inputWrapper}>
-              <TextInput
-                value={field.value}
-                onChangeText={field.onChange}
-                placeholder="********"
-                secureTextEntry
-              />
-              {invalid ? (
-                <Text style={styles.helperText}>{error?.message}</Text>
-              ) : null}
-            </View>
-          )}
-        />
-
-        <View style={styles.buttonsContainer}>
-          <Button
-            label={t("enter")}
-            onPress={onSignIn}
-            disabled={methods.formState.isSubmitting}
-            loading={methods.formState.isSubmitting}
+        <View style={styles.formContainer}>
+          {error ? <InlineAlert message={t("wrongCredentials")} /> : null}
+          <Controller
+            control={methods.control}
+            name="identifier"
+            render={({ field, fieldState: { invalid, error } }) => (
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  placeholder={t("phoneOrEmail")}
+                />
+                {invalid ? (
+                  <Text style={styles.helperText}>{error?.message}</Text>
+                ) : null}
+              </View>
+            )}
           />
-          <Link href="/sign-up" asChild>
-            <Button label={t("signUp")} variant="ghost" />
-          </Link>
+
+          <Controller
+            control={methods.control}
+            name="password"
+            render={({ field, fieldState: { invalid, error } }) => (
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  placeholder="********"
+                  secureTextEntry
+                />
+                {invalid ? (
+                  <Text style={styles.helperText}>{error?.message}</Text>
+                ) : null}
+              </View>
+            )}
+          />
+
+          <View style={styles.buttonsContainer}>
+            <Button
+              label={t("enter")}
+              onPress={onSignIn}
+              disabled={methods.formState.isSubmitting}
+              loading={methods.formState.isSubmitting}
+            />
+            <Link href="/sign-up" asChild>
+              <Button label={t("signUp")} variant="ghost" />
+            </Link>
+          </View>
         </View>
-      </View>
+      </WrapperView>
     </RootView>
   );
 }

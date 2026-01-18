@@ -4,7 +4,7 @@ import Button from "@/components/button";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { RootView, View } from "@/components/views";
+import { RootView, View, WrapperView } from "@/components/views";
 import { ActivityIndicator, Linking, Platform, Pressable } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
@@ -73,7 +73,11 @@ const MonthlySummary = () => {
   if (status.loading) {
     return (
       <RootView>
-        <ActivityIndicator size="large" />
+        <WrapperView>
+          <View center="all">
+            <ActivityIndicator size="large" />
+          </View>
+        </WrapperView>
       </RootView>
     );
   }
@@ -81,66 +85,70 @@ const MonthlySummary = () => {
   if (status.error) {
     return (
       <RootView>
-        <Text>
-          There was an error when loading the data. Please try again in a few
-          seconds.
-        </Text>
-        <Button label="Try again" onPress={getData} />
+        <WrapperView>
+          <Text>
+            There was an error when loading the data. Please try again in a few
+            seconds.
+          </Text>
+          <Button label="Try again" onPress={getData} />
+        </WrapperView>
       </RootView>
     );
   }
 
   return (
     <RootView>
-      <PageHeader
-        title={t("monthlySummary")}
-        bottom={
-          <View style={styles.dateContainer}>
-            <Text style={styles.dateLabel}>{currentMonth}</Text>
-            <Link href="/choose-date" asChild>
-              <Pressable style={styles.link}>
-                <Text style={styles.linkText}>{t("changeMonth")}</Text>
-                <SimpleLineIcons
-                  name="arrow-right"
-                  color={styles.icon.color}
-                  size={styles.icon.height}
-                />
-              </Pressable>
-            </Link>
+      <WrapperView>
+        <PageHeader
+          title={t("monthlySummary")}
+          bottom={
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateLabel}>{currentMonth}</Text>
+              <Link href="/choose-date" asChild>
+                <Pressable style={styles.link}>
+                  <Text style={styles.linkText}>{t("changeMonth")}</Text>
+                  <SimpleLineIcons
+                    name="arrow-right"
+                    color={styles.icon.color}
+                    size={styles.icon.height}
+                  />
+                </Pressable>
+              </Link>
+            </View>
+          }
+        />
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>{t("totalIncome")}</Text>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardAmount}>{totalIncome}</Text>
+            <Text style={styles.cardCurrency}>AED</Text>
           </View>
-        }
-      />
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t("totalIncome")}</Text>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardAmount}>{totalIncome}</Text>
-          <Text style={styles.cardCurrency}>AED</Text>
         </View>
-      </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t("totalExpenses")}</Text>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardAmount}>{totalExpenses}</Text>
-          <Text style={styles.cardCurrency}>AED</Text>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>{t("totalExpenses")}</Text>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardAmount}>{totalExpenses}</Text>
+            <Text style={styles.cardCurrency}>AED</Text>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t("totalProfit")}</Text>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardAmount}>{totalProfit}</Text>
-          <Text style={styles.cardCurrency}>AED</Text>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>{t("totalProfit")}</Text>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardAmount}>{totalProfit}</Text>
+            <Text style={styles.cardCurrency}>AED</Text>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.buttonsContainer}>
-        <Button onPress={onShare} label={t("shareByWS")} />
-        <Link href="/daily-summary" asChild dismissTo>
-          <Button label={t("dailySummary")} variant="secondary" />
-        </Link>
-      </View>
+        <View style={styles.buttonsContainer}>
+          <Button onPress={onShare} label={t("shareByWS")} />
+          <Link href="/daily-summary" asChild dismissTo>
+            <Button label={t("dailySummary")} variant="secondary" />
+          </Link>
+        </View>
+      </WrapperView>
     </RootView>
   );
 };

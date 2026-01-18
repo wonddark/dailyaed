@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native-unistyles";
 import { Link } from "expo-router";
 import { Platform } from "react-native";
 import Button from "@/components/button";
-import { RootView, View } from "@/components/views";
+import { View } from "@/components/views";
 import { useTranslation } from "react-i18next";
 
 const Welcome = () => {
@@ -17,7 +17,7 @@ const Welcome = () => {
   }, []);
 
   return (
-    <RootView>
+    <>
       <View style={styles.header}>
         <Text style={styles.title}>
           {t("welcome")} <Text style={styles.appName}>{t("appName")}</Text>
@@ -37,7 +37,7 @@ const Welcome = () => {
           <Button label={t("signIn")} variant="secondary" />
         </Link>
       </View>
-    </RootView>
+    </>
   );
 };
 
