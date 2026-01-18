@@ -54,12 +54,12 @@ export { View, RootView, WrapperView, InlineAlert };
 const styles = StyleSheet.create((theme, miniRuntime) => ({
   root: {
     flex: 1,
-    gap: 16,
   },
   wrapper: {
     maxWidth: 1200,
     marginHorizontal: "auto",
     flex: 1,
+    gap: 16,
     width: "100%",
   },
   view: {
