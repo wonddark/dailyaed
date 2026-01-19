@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { Link } from "expo-router";
 import Button from "@/components/button";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 
 const HeaderSettingsBtn = () => {
   return (
@@ -10,8 +10,8 @@ const HeaderSettingsBtn = () => {
       <Button
         variant="ghost"
         icon={
-          <SimpleLineIcons
-            name="settings"
+          <FontAwesomeIcons
+            name="gear"
             color={styles.icon.color}
             size={styles.icon.height}
           />

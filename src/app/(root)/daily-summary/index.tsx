@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
 import { generateWSLink } from "@/utils/share-as-text";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
 
 const DailySummary = () => {
@@ -71,7 +71,7 @@ const DailySummary = () => {
       <RootView>
         <WrapperView>
           <View center="all">
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" color={styles.icon.color} />
           </View>
         </WrapperView>
       </RootView>
@@ -104,12 +104,12 @@ const DailySummary = () => {
               >{`${t("today")} - ${currentDate}`}</Text>
               <Link href="/choose-date?pickDay=true" asChild>
                 <Pressable style={styles.link}>
-                  <Text style={styles.linkText}>{t("changeDate")}</Text>
-                  <SimpleLineIcons
-                    name="arrow-right"
+                  <FontAwesomeIcons
+                    name="calendar-check"
                     color={styles.icon.color}
                     size={styles.icon.height}
                   />
+                  <Text style={styles.linkText}>{t("changeDate")}</Text>
                 </Pressable>
               </Link>
             </View>
@@ -122,12 +122,12 @@ const DailySummary = () => {
               <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
               <Link href="/edit-income" asChild>
                 <Pressable style={styles.link}>
-                  <Text style={styles.linkText}>{t("editIncome")}</Text>
-                  <SimpleLineIcons
-                    name="arrow-right"
+                  <FontAwesomeIcons
+                    name="edit"
                     color={styles.icon.color}
-                    size={styles.icon.height}
+                    size={styles.linkIcon.height}
                   />
+                  <Text style={styles.linkText}>{t("edit")}</Text>
                 </Pressable>
               </Link>
             </View>
@@ -147,12 +147,12 @@ const DailySummary = () => {
               <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
               <Link href="/edit-expenses" asChild>
                 <Pressable style={styles.link}>
-                  <Text style={styles.linkText}>{t("editExpenses")}</Text>
-                  <SimpleLineIcons
-                    name="arrow-right"
+                  <FontAwesomeIcons
+                    name="edit"
                     color={styles.icon.color}
-                    size={styles.icon.height}
+                    size={styles.linkIcon.height}
                   />
+                  <Text style={styles.linkText}>{t("edit")}</Text>
                 </Pressable>
               </Link>
             </View>
@@ -237,7 +237,10 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: theme.colors.divider,
-    gap: 2,
+    gap: {
+      xs: 6,
+      lg: 10,
+    },
     flex: {
       xs: undefined,
       lg: 1,
@@ -273,6 +276,12 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     },
     color: theme.colors.accent,
   },
+  linkIcon: {
+    height: {
+      xs: 12,
+      lg: 16,
+    },
+  },
   cardContent: {
     gap: 6,
     flexDirection: "row",
@@ -282,13 +291,21 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   cardAmount: {
     fontFamily: "Poppins-Light",
     fontSize: {
-      xs: 36,
+      xs: 40,
       lg: 60,
+    },
+    lineHeight: {
+      xs: theme.lineHeight(40, 1.1),
+      lg: theme.lineHeight(60, 1.1),
     },
   },
   cardCurrency: {
     fontSize: { xs: 14, lg: 16 },
     color: theme.colors.muted,
+    lineHeight: {
+      xs: theme.lineHeight(14, 1.5),
+      lg: theme.lineHeight(16, 1.5),
+    },
   },
   income: (value: number) => ({
     color: value >= 0 ? theme.colors.gaining : theme.colors.losing,

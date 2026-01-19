@@ -142,7 +142,7 @@ const EditExpenses = () => {
         <ButtonsContainer>
           <Button label="Save Expenses" onPress={onSave} />
           <Link href="/daily-summary" asChild replace>
-            <Button label="Cancel" variant="ghost" />
+            <Button label="Cancel" variant="secondary" />
           </Link>
         </ButtonsContainer>
       </WrapperView>

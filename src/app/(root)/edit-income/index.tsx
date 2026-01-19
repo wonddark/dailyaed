@@ -150,7 +150,7 @@ const EditIncome = () => {
             disabled={methods.formState.isSubmitting}
           />
           <Link href="/daily-summary" asChild replace>
-            <Button label={t("cancel")} variant="ghost" />
+            <Button label={t("cancel")} variant="secondary" />
           </Link>
         </ButtonsContainer>
       </WrapperView>

@@ -20,6 +20,7 @@ const lightTheme = {
     losing: colors.light.bad,
   },
   gap: (v: number) => v * 8,
+  lineHeight: (fontSize: number, multiplier: number) => fontSize * multiplier,
 };
 
 const darkTheme = {
@@ -42,6 +43,7 @@ const darkTheme = {
     losing: colors.dark.bad,
   },
   gap: (v: number) => v * 8,
+  lineHeight: (fontSize: number, multiplier: number) => fontSize * multiplier,
 };
 
 export const appThemes = {

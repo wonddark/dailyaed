@@ -10,7 +10,7 @@ import { StyleSheet } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
 import { generateWSLink } from "@/utils/share-as-text";
 import PageHeader from "@/components/PageHeader";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
 
 const MonthlySummary = () => {
@@ -76,7 +76,7 @@ const MonthlySummary = () => {
       <RootView>
         <WrapperView>
           <View center="all">
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" color={styles.icon.color} />
           </View>
         </WrapperView>
       </RootView>
@@ -107,12 +107,12 @@ const MonthlySummary = () => {
               <Text style={styles.dateLabel}>{currentMonth}</Text>
               <Link href="/choose-date" asChild>
                 <Pressable style={styles.link}>
-                  <Text style={styles.linkText}>{t("changeMonth")}</Text>
-                  <SimpleLineIcons
-                    name="arrow-right"
+                  <FontAwesomeIcons
+                    name="calendar-check"
                     color={styles.icon.color}
                     size={styles.icon.height}
                   />
+                  <Text style={styles.linkText}>{t("changeMonth")}</Text>
                 </Pressable>
               </Link>
             </View>

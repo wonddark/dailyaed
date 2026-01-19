@@ -118,7 +118,7 @@ const ChooseDate = () => {
           <Button
             onPress={() => dismiss()}
             label={t("cancel")}
-            variant="ghost"
+            variant="secondary"
           />
         </ButtonsContainer>
       </WrapperView>
