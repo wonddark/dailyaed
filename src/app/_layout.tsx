@@ -7,9 +7,16 @@ import { SplashScreenController } from "@/components/SplashScreenController";
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
+  ThemeProvider
 } from "@react-navigation/native";
 import "@/i18next";
+import { appThemes, breakpoints, settings } from "@/lib/unistyles";
+
+StyleSheet.configure({
+  themes: appThemes,
+  breakpoints,
+  settings,
+});
 
 function RootLayout() {
   const { isLoggedIn } = useAuthContext();
