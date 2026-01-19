@@ -62,7 +62,7 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
           gap: 12,
         },
         default: {
-          borderRadius: { xs: 4, lg: 6 },
+          borderRadius: { xs: 8, lg: 12 },
           paddingVertical: { xs: 12, lg: 10 },
           paddingHorizontal: { xs: 24, lg: 20 },
           gap: {

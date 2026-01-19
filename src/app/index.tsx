@@ -35,6 +35,7 @@ const Welcome = () => {
               flex: 1,
               maxHeight: 400,
               gap: 8,
+              alignItems: "center",
             }}
           >
             <Image
@@ -83,15 +84,16 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.primary,
   },
   subtitle: {
-    fontSize: { xs: 14, lg: 16 },
-    color: theme.colors.muted,
+    fontSize: { xs: 12, lg: 16 },
+    color: theme.colors.body2,
     textAlign: "center",
   },
   headline: {
     fontWeight: 300,
     textAlign: "center",
+    width: "85%",
     fontSize: {
-      xs: 16,
+      xs: 12,
       lg: 20,
     },
   },
@@ -109,7 +111,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.primary,
   },
   image: {
-    flex: 1,
-    width: "100%",
+    aspectRatio: 1,
+    width: "85%",
+    borderRadius: 1000,
   },
 }));
