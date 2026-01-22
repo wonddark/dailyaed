@@ -63,7 +63,7 @@ export default function SignIn() {
 
         <View style={styles.formContainer}>
           {error ? <InlineAlert message={t("wrongCredentials")} /> : null}
-          <View style={styles.inputWrapper}>
+          <View style={styles.formFields}>
             <Controller
               control={methods.control}
               name="identifier"
@@ -127,14 +127,14 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   },
   formFields: {
     gap: {
-      xs: 8,
-      lg: 12,
+      xs: 12,
+      lg: 24,
     },
   },
   inputWrapper: {
     gap: {
-      xs: 2,
-      lg: 12,
+      xs: 4,
+      lg: 8,
     },
   },
   helperText: {
