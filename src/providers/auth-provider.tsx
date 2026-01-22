@@ -8,7 +8,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchSession = async () => {
+    (async () => {
       setIsLoading(true);
 
       const {
@@ -22,9 +22,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
       setSession(session);
       setIsLoading(false);
-    };
-
-    fetchSession();
+    })();
 
     const {
       data: { subscription },

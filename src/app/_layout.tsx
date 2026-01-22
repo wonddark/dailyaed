@@ -3,7 +3,6 @@ import { Stack } from "expo-router";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import AuthProvider from "@/providers/auth-provider";
 import { useAuthContext } from "@/hooks/use-auth-context";
-import { SplashScreenController } from "@/components/SplashScreenController";
 import {
   DarkTheme,
   DefaultTheme,
@@ -11,6 +10,8 @@ import {
 } from "@react-navigation/native";
 import "@/i18next";
 import { appThemes, breakpoints, settings } from "@/lib/unistyles";
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 StyleSheet.configure({
   themes: appThemes,
@@ -30,41 +31,61 @@ function RootLayout() {
         />
         <Stack.Screen
           name="(auth)/sign-in/index"
-          options={{ headerShown: false }}
+          options={{ headerShown: false, title: "Sign In - DailyAED" }}
         />
         <Stack.Screen
           name="(auth)/sign-up/index"
-          options={{ headerShown: false }}
+          options={{ headerShown: false, title: "Sign Up - DailyAED" }}
         />
       </Stack.Protected>
       <Stack.Protected guard={isLoggedIn}>
         <Stack.Screen
           name="(root)/daily-summary/index"
-          options={{ headerShown: false, title: "Daily Summary" }}
+          options={{ headerShown: false, title: "Daily Summary - DailyAED" }}
         />
         <Stack.Screen
           name="(root)/monthly-summary/index"
-          options={{ headerShown: false, title: "Monthly Summary" }}
+          options={{ headerShown: false, title: "Monthly Summary - DailyAED" }}
         />
         <Stack.Screen
           name="(root)/edit-income/index"
-          options={{ headerShown: false, title: "Edit Income" }}
+          options={{ headerShown: false, title: "Edit Income - DailyAED" }}
         />
         <Stack.Screen
           name="(root)/edit-expenses/index"
-          options={{ headerShown: false, title: "Edit Expenses" }}
+          options={{ headerShown: false, title: "Edit Expenses - DailyAED" }}
         />
         <Stack.Screen
           name="(root)/choose-date/index"
-          options={{ headerShown: false, title: "Choose Date" }}
+          options={{ headerShown: false, title: "Choose Date - DailyAED" }}
         />
         <Stack.Screen
           name="(root)/settings/index"
-          options={{ headerShown: false, title: "Settings" }}
+          options={{ headerShown: false, title: "Settings - DailyAED" }}
         />
       </Stack.Protected>
     </Stack>
   );
+}
+
+SplashScreen.setOptions({
+  fade: true,
+  duration: 1000,
+});
+SplashScreen.preventAutoHideAsync();
+
+function SplashScreenController() {
+  const { isLoading } = useAuthContext();
+
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hide();
+    }
+  }, [isLoading]);
+
+  if (isLoading) return null;
+
+  return <RootLayout />;
 }
 
 function ContextWrapper() {
@@ -72,27 +93,13 @@ function ContextWrapper() {
     rt: { colorScheme },
   } = useUnistyles();
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <AuthProvider>
+    <AuthProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <SplashScreenController />
         <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
-        <RootLayout />
-      </AuthProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
 export default ContextWrapper;
-
-const styles = StyleSheet.create(() => ({
-  root: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  wrapper: {
-    flex: 1,
-    width: "100%",
-    maxWidth: 720,
-    marginHorizontal: "auto",
-  },
-}));
