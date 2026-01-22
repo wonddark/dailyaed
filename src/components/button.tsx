@@ -11,7 +11,7 @@ import { ReactNode } from "react";
 type ButtonProps = Omit<PressableProps, "children"> & {
   label?: string;
   variant?: "secondary" | "ghost" | "link";
-  size?: "small" | "large";
+  size?: "small" | "large" | "icon";
   loading?: boolean;
   icon?: ReactNode;
 };
@@ -32,7 +32,7 @@ function Button({ label, ...props }: Readonly<ButtonProps>) {
       {loading ? (
         <ActivityIndicator size="small" color={styles.loader.color} />
       ) : null}
-      <Text style={styles.text}>{label}</Text>
+      {label ? <Text style={styles.text}>{label}</Text> : null}
       {icon}
     </Pressable>
   );
@@ -60,6 +60,12 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
           paddingHorizontal: 32,
           borderRadius: 10,
           gap: 12,
+        },
+        icon: {
+          padding: {
+            xs: 6,
+            lg: 10,
+          },
         },
         default: {
           borderRadius: { xs: 8, lg: 12 },
@@ -111,6 +117,7 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
         large: {
           fontSize: { xs: 16, lg: 18 },
         },
+        icon: {},
         default: {
           fontSize: {
             xs: 12,

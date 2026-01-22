@@ -9,6 +9,7 @@ const HeaderSettingsBtn = () => {
     <Link href="/settings" asChild>
       <Button
         variant="ghost"
+        size="icon"
         icon={
           <FontAwesomeIcons
             name="gear"
@@ -23,9 +24,9 @@ const HeaderSettingsBtn = () => {
 
 export default HeaderSettingsBtn;
 
-const styles = StyleSheet.create((theme, miniRuntime) => ({
+const styles = StyleSheet.create((theme) => ({
   icon: {
     color: theme.colors.body2,
-    height: miniRuntime.screen.width <= 640 ? 20 : 24,
+    height: { xs: 20, lg: 24 },
   },
 }));
