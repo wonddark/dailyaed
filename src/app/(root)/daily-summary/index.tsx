@@ -31,7 +31,10 @@ const DailySummary = () => {
     loading: true,
     error: false,
   });
-  const currentDate = dayjs(date as string | undefined).format("MMM DD");
+  const isToday = dayjs().isSame(date as string | undefined, "day");
+  const currentDate = dayjs(date as string | undefined).format(
+    isToday ? "MMM DD" : "ddd, MMM DD",
+  );
 
   const getStoredData = async () => {
     setStatus({ loading: true, error: false });
@@ -102,7 +105,7 @@ const DailySummary = () => {
             <View style={styles.dateContainer}>
               <Text
                 style={styles.dateLabel}
-              >{`${t("today")} - ${currentDate}`}</Text>
+              >{`${isToday ? t("today") + " - " + currentDate : currentDate}`}</Text>
               <Link href="/choose-date?pickDay=true" asChild>
                 <Pressable style={styles.link}>
                   <FontAwesomeIcons
