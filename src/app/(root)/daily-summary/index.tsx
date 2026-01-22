@@ -12,10 +12,11 @@ import PageHeader from "@/components/PageHeader";
 import { generateWSLink } from "@/utils/share-as-text";
 import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
+import SummaryCard from "@/components/SummaryCard";
+import SummaryCardsContainer from "@/components/summary-cards-container";
 
 const DailySummary = () => {
-  const { t, i18n } = useTranslation();
-  const locale = i18n.resolvedLanguage ?? "en";
+  const { t } = useTranslation();
   const { date } = useLocalSearchParams();
   const [data, setData] = useState<{
     income: number;
@@ -116,70 +117,28 @@ const DailySummary = () => {
           }
         />
 
-        <View style={styles.cardsContainer}>
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{t("todayIncome")}</Text>
-              <Link href="/edit-income" asChild>
-                <Pressable style={styles.link}>
-                  <FontAwesomeIcons
-                    name="edit"
-                    color={styles.icon.color}
-                    size={styles.linkIcon.height}
-                  />
-                  <Text style={styles.linkText}>{t("edit")}</Text>
-                </Pressable>
-              </Link>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.cardAmount}>
-                {Intl.NumberFormat(locale, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(data.income)}
-              </Text>
-              <Text style={styles.cardCurrency}>AED</Text>
-            </View>
-          </View>
-
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{t("todayExpenses")}</Text>
-              <Link href="/edit-expenses" asChild>
-                <Pressable style={styles.link}>
-                  <FontAwesomeIcons
-                    name="edit"
-                    color={styles.icon.color}
-                    size={styles.linkIcon.height}
-                  />
-                  <Text style={styles.linkText}>{t("edit")}</Text>
-                </Pressable>
-              </Link>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.cardAmount}>
-                {Intl.NumberFormat(locale, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(data.expenses)}
-              </Text>
-              <Text style={styles.cardCurrency}>AED</Text>
-            </View>
-          </View>
-
-          <View style={[styles.card, styles.bigCard]}>
-            <Text style={styles.cardTitle}>{t("todayProfit")}</Text>
-            <View style={styles.cardContent}>
-              <Text style={[styles.cardAmount, styles.income(data.profit)]}>
-                {Intl.NumberFormat(locale, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(data.profit)}
-              </Text>
-              <Text style={styles.cardCurrency}>AED</Text>
-            </View>
-          </View>
-        </View>
+        <SummaryCardsContainer>
+          <SummaryCard
+            title={t("todayIncome")}
+            actionRoute="/edit-income"
+            actionIcon="edit"
+            actionLabel={t("edit")}
+            amount={data.income}
+          />
+          <SummaryCard
+            title={t("todayExpenses")}
+            actionRoute="/edit-expenses"
+            actionIcon="edit"
+            actionLabel={t("edit")}
+            amount={data.expenses}
+          />
+          <SummaryCard
+            title={t("todayProfit")}
+            amount={data.profit}
+            big
+            amountContext
+          />
+        </SummaryCardsContainer>
 
         <ButtonsContainer>
           <Button onPress={onShare} label={t("shareByWS")} />
@@ -194,7 +153,7 @@ const DailySummary = () => {
 
 export default DailySummary;
 
-const styles = StyleSheet.create((theme, miniRuntime) => ({
+const styles = StyleSheet.create((theme) => ({
   headerContainer: {
     alignItems: "flex-start",
     width: "100%",
@@ -216,53 +175,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
       lg: 14,
     },
   },
-  cardsContainer: {
-    flexDirection: {
-      xs: "column",
-      lg: "row",
-    },
-    flexWrap: {
-      xs: undefined,
-      lg: "wrap",
-    },
-    gap: {
-      xs: 16,
-      lg: 20,
-    },
-  },
-  card: {
-    padding: 24,
-    borderRadius: 10,
-    backgroundColor: theme.colors.card,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: theme.colors.divider,
-    gap: {
-      xs: 6,
-      lg: 10,
-    },
-    flex: {
-      xs: undefined,
-      lg: 1,
-    },
-  },
-  bigCard: {
-    width: "100%",
-    flex: undefined,
-  },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: theme.colors.card,
-  },
-  cardTitle: {
-    fontSize: {
-      xs: 12,
-      lg: 16,
-    },
-    color: theme.colors.body2,
-  },
   link: {
     flexDirection: "row",
     alignItems: "center",
@@ -276,40 +188,6 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     },
     color: theme.colors.accent,
   },
-  linkIcon: {
-    height: {
-      xs: 12,
-      lg: 16,
-    },
-  },
-  cardContent: {
-    gap: 6,
-    flexDirection: "row",
-    alignItems: "baseline",
-    backgroundColor: theme.colors.card,
-  },
-  cardAmount: {
-    fontFamily: "Poppins-Light",
-    fontSize: {
-      xs: 40,
-      lg: 60,
-    },
-    lineHeight: {
-      xs: theme.lineHeight(40, 1.1),
-      lg: theme.lineHeight(60, 1.1),
-    },
-  },
-  cardCurrency: {
-    fontSize: { xs: 14, lg: 16 },
-    color: theme.colors.muted,
-    lineHeight: {
-      xs: theme.lineHeight(14, 1.5),
-      lg: theme.lineHeight(16, 1.5),
-    },
-  },
-  income: (value: number) => ({
-    color: value >= 0 ? theme.colors.gaining : theme.colors.losing,
-  }),
   icon: {
     color: theme.colors.accent,
     height: {

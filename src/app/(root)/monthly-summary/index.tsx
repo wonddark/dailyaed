@@ -12,6 +12,8 @@ import { generateWSLink } from "@/utils/share-as-text";
 import PageHeader from "@/components/PageHeader";
 import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
+import SummaryCardsContainer from "@/components/summary-cards-container";
+import SummaryCard from "@/components/SummaryCard";
 
 const MonthlySummary = () => {
   const { t } = useTranslation();
@@ -119,29 +121,15 @@ const MonthlySummary = () => {
           }
         />
 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("totalIncome")}</Text>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardAmount}>{totalIncome}</Text>
-            <Text style={styles.cardCurrency}>AED</Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("totalExpenses")}</Text>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardAmount}>{totalExpenses}</Text>
-            <Text style={styles.cardCurrency}>AED</Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("totalProfit")}</Text>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardAmount}>{totalProfit}</Text>
-            <Text style={styles.cardCurrency}>AED</Text>
-          </View>
-        </View>
+        <SummaryCardsContainer>
+          <SummaryCard title={t("totalIncome")} amount={totalIncome} />
+          <SummaryCard title={t("totalExpenses")} amount={totalExpenses} />
+          <SummaryCard
+            title={t("totalProfit")}
+            amount={totalProfit}
+            amountContext
+          />
+        </SummaryCardsContainer>
 
         <ButtonsContainer>
           <Button onPress={onShare} label={t("shareByWS")} />
