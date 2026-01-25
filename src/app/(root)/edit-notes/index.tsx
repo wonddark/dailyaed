@@ -111,7 +111,7 @@ const EditNotes = () => {
     <RootView>
       <WrapperView>
         <PageHeader
-          title={t("editNotes")}
+          title={t("updateNotes")}
           bottom={
             <View style={styles.dateContainer}>
               <Text

@@ -52,6 +52,7 @@ const spanishTranslations = {
     back: "Volver",
     noNoteFound: "No se encontraron notas para esta fecha.",
     editNotes: "Editar",
+    updateNotes: "Actualizar Notas",
   },
 };
 

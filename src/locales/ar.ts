@@ -51,6 +51,7 @@ const arabicTranslations = {
     back: "رجوع",
     noNoteFound: "لا توجد ملاحظات لهذا التاريخ",
     editNotes: "تعديل",
+    updateNotes: "تحديث الملاحظات",
   },
 };
 

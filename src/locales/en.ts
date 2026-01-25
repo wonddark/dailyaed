@@ -51,6 +51,7 @@ const englishTranslations = {
     back: "Back",
     noNoteFound: "No notes found for this date.",
     editNotes: "Edit",
+    updateNotes: "Update Notes",
   },
 };
 

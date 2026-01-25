@@ -60,6 +60,10 @@ function RootLayout() {
           options={{ headerShown: false, title: "Edit Expenses - DailyAED" }}
         />
         <Stack.Screen
+          name="(root)/edit-notes/index"
+          options={{ headerShown: false, title: "Edit Notes - DailyAED" }}
+        />
+        <Stack.Screen
           name="(root)/choose-date/index"
           options={{ headerShown: false, title: "Choose Date - DailyAED" }}
         />
