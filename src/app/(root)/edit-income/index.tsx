@@ -143,15 +143,20 @@ const EditIncome = () => {
           )}
         />
         <ButtonsContainer>
+          <Link href="/daily-summary" asChild dismissTo>
+            <Button
+              label={t("cancel")}
+              variant="outlined"
+              leftIcon="arrow-left-long"
+            />
+          </Link>
           <Button
             label={t("saveIncome")}
             onPress={onSave}
             loading={methods.formState.isSubmitting}
             disabled={methods.formState.isSubmitting}
+            style={styles.widerButton}
           />
-          <Link href="/daily-summary" asChild replace>
-            <Button label={t("cancel")} variant="secondary" />
-          </Link>
         </ButtonsContainer>
       </WrapperView>
     </RootView>
@@ -186,5 +191,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.losing,
     fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
     fontWeight: 500,
+  },
+  widerButton: {
+    flex: 1,
   },
 }));

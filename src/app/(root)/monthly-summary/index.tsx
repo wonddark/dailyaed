@@ -132,10 +132,18 @@ const MonthlySummary = () => {
         </SummaryCardsContainer>
 
         <ButtonsContainer>
-          <Button onPress={onShare} label={t("shareByWS")} />
           <Link href="/daily-summary" asChild dismissTo>
-            <Button label={t("dailySummary")} variant="secondary" />
+            <Button
+              label={t("back")}
+              variant="outlined"
+              leftIcon="arrow-left-long"
+            />
           </Link>
+          <Button
+            onPress={onShare}
+            label={t("shareByWS")}
+            style={styles.wideButton}
+          />
         </ButtonsContainer>
       </WrapperView>
     </RootView>
@@ -211,5 +219,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
   icon: {
     color: theme.colors.accent,
     height: miniRuntime.screen.width <= 640 ? 12 : 16,
+  },
+  wideButton: {
+    flex: 1,
   },
 }));

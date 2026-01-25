@@ -1,6 +1,6 @@
 import {
   Text as DefaultText,
-  TextInput as DefaultTextInput,
+  TextInput as DefaultTextInput
 } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { appThemes, breakpoints, settings } from "@/lib/unistyles";
@@ -21,11 +21,11 @@ function Text({ children, ...props }: Readonly<TextProps>) {
 }
 
 type TextInputProps = DefaultTextInput["props"];
-function TextInput({ children, ...props }: Readonly<TextInputProps>) {
+function TextInput({ children, style, ...props }: Readonly<TextInputProps>) {
   return (
     <DefaultTextInput
+      style={[styles.textInput(Boolean(props.multiline)), style]}
       {...props}
-      style={[styles.textInput, props.style]}
       placeholderTextColor={styles.placeholder.color}
     >
       {children}
@@ -38,11 +38,19 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.body,
     fontFamily: "Inter",
   },
-  textInput: {
+  textInput: (multiline: boolean) => ({
     fontFamily: "Poppins",
     fontSize: {
       xs: 13,
       lg: 15,
+    },
+    padding: {
+      xs: 12,
+      lg: 10,
+    },
+    height: {
+      xs: multiline ? 85 : "auto",
+      lg: multiline ? 90 : "auto",
     },
     color: theme.colors.body,
     borderWidth: 1,
@@ -52,12 +60,9 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
       xs: 8,
       lg: 8,
     },
-    padding: {
-      xs: 12,
-      lg: 10,
-    },
     textAlignVertical: "center",
-  },
+    verticalAlign: multiline ? "top" : "middle",
+  }),
   placeholder: {
     color: theme.colors.muted,
   },

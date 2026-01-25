@@ -38,14 +38,19 @@ const Settings = () => {
           sideAction={false}
         />
         <ButtonsContainer>
+          <Link href="/daily-summary" asChild dismissTo>
+            <Button
+              label={t("back")}
+              leftIcon="arrow-left-long"
+              variant="outlined"
+            />
+          </Link>
           <Button
             onPress={onSignOut}
             label={t("signOut")}
             loading={status.loading}
+            style={styles.longButton}
           />
-          <Link href="/daily-summary" asChild dismissTo>
-            <Button label={t("dailySummary")} variant="secondary" />
-          </Link>
         </ButtonsContainer>
       </WrapperView>
     </RootView>
@@ -54,4 +59,8 @@ const Settings = () => {
 
 export default Settings;
 
-const styles = StyleSheet.create(() => ({}));
+const styles = StyleSheet.create(() => ({
+  longButton: {
+    flex: 1,
+  },
+}));

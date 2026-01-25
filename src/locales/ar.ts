@@ -34,6 +34,7 @@ const arabicTranslations = {
     settingsSubtitle: "تخصيص طريقة استخدامك للتطبيق",
     chooseDateSubtitle: "اختر تاريخاً لعرض الملخص",
     saveIncome: "حفظ الدخل",
+    saveExpenses: "حفظ المصروفات",
     tryAgain: "إعادة المحاولة",
     signOut: "تسجيل الخروج",
     requiredField: "حقل مطلوب",
@@ -44,6 +45,12 @@ const arabicTranslations = {
     totalExpenses: "إجمالي المصروفات",
     totalProfit: "إجمالي الربح",
     dailySummary: "الملخص اليومي",
+    seeNotes: "الملاحظات",
+    notes: "الملاحظات",
+    backToSummary: "العودة إلى الملخص",
+    back: "رجوع",
+    noNoteFound: "لا توجد ملاحظات لهذا التاريخ",
+    editNotes: "تعديل",
   },
 };
 

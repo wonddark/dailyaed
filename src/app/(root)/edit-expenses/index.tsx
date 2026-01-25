@@ -25,6 +25,7 @@ const EditExpenses = () => {
       id: "",
       expenses: 0,
       income: 0,
+      notes: "",
     },
     resolver: yupResolver(
       yup.object().shape({
@@ -34,6 +35,7 @@ const EditExpenses = () => {
           .positive(t("positiveValueExpected"))
           .required(t("requiredField")),
         income: yup.number().required(),
+        notes: yup.string(),
       }),
     ),
   });
@@ -49,6 +51,7 @@ const EditExpenses = () => {
       methods.setValue("id", response.data[0].id);
       methods.setValue("expenses", response.data[0].expenses);
       methods.setValue("income", response.data[0].income);
+      methods.setValue("notes", response.data[0].notes ?? "");
     }
     setStatus({ loading: false, error: response.error !== null });
   };
@@ -60,6 +63,7 @@ const EditExpenses = () => {
         expenses: data.expenses,
         profit: data.income - data.expenses,
         date: new Date().toISOString(),
+        notes: data.notes,
       });
     } else {
       response = await supabase
@@ -67,6 +71,7 @@ const EditExpenses = () => {
         .update({
           expenses: data.expenses,
           profit: data.income - data.expenses,
+          notes: data.notes,
         })
         .match({ id: data.id });
     }
@@ -114,9 +119,11 @@ const EditExpenses = () => {
           <Text style={styles.title}>Edit Expenses</Text>
           <Text style={styles.dateLabel}>Today - Jan 02</Text>
         </View>
+
         {status.error ? (
           <InlineAlert message="There was an error when saving the expenses. We will try again later." />
         ) : null}
+
         <Controller
           control={methods.control}
           name="expenses"
@@ -139,11 +146,39 @@ const EditExpenses = () => {
             </View>
           )}
         />
+
+        <Controller
+          control={methods.control}
+          name="notes"
+          render={({ field, fieldState: { invalid, error } }) => (
+            <View style={styles.inputWrapper}>
+              <TextInput
+                value={`${field.value}`}
+                onChangeText={field.onChange}
+                multiline
+              />
+              {invalid ? (
+                <Text style={styles.helperText}>{error?.message}</Text>
+              ) : null}
+            </View>
+          )}
+        />
+
         <ButtonsContainer>
-          <Button label="Save Expenses" onPress={onSave} />
-          <Link href="/daily-summary" asChild replace>
-            <Button label="Cancel" variant="secondary" />
+          <Link href="/daily-summary" asChild dismissTo>
+            <Button
+              label="Cancel"
+              variant="outlined"
+              leftIcon="arrow-left-long"
+            />
           </Link>
+          <Button
+            label={t("saveExpenses")}
+            onPress={onSave}
+            loading={methods.formState.isSubmitting}
+            disabled={methods.formState.isSubmitting}
+            style={styles.wideButton}
+          />
         </ButtonsContainer>
       </WrapperView>
     </RootView>
@@ -174,5 +209,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.losing,
     fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
     fontWeight: 500,
+  },
+  wideButton: {
+    flex: 1,
   },
 }));

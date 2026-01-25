@@ -4,7 +4,7 @@ import { View } from "@/components/views";
 import { Text } from "@/components/themed";
 import { Link } from "expo-router";
 import { Pressable } from "react-native";
-import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
+import FontAwesomeIcon from "@expo/vector-icons/FontAwesome6";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -15,10 +15,12 @@ type Props = {
   amount: number;
   amountContext?: boolean;
   big?: boolean;
+  notes?: string;
+  notesDate?: string;
 };
 
 const SummaryCard = (props: Readonly<Props>) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const locale = i18n.resolvedLanguage ?? "en";
   const {
     title,
@@ -28,27 +30,48 @@ const SummaryCard = (props: Readonly<Props>) => {
     amount,
     amountContext,
     big,
+    notes,
+    notesDate,
   } = props;
+
+  if (notes && notes !== "" && !notesDate)
+    throw new Error("A date must be provided for notes.");
+
   return (
     <View style={[styles.card, big ? styles.bigCard : {}]}>
       <View style={styles.cardHeader}>
         <Text style={styles.cardTitle}>{title}</Text>
-        {actionRoute ? (
-          <Link href={actionRoute} asChild>
-            <Pressable style={styles.link}>
-              {actionIcon ? (
-                <FontAwesomeIcons
-                  name={actionIcon}
+
+        <View style={styles.cardHeaderLinks}>
+          {notes && notesDate ? (
+            <Link href={`/daily-notes?date=${notesDate}`} asChild>
+              <Pressable style={styles.link}>
+                <FontAwesomeIcon
+                  name="file-lines"
                   color={styles.icon.color}
                   size={styles.icon.height}
                 />
-              ) : null}
-              {actionLabel ? (
-                <Text style={styles.linkText}>{actionLabel}</Text>
-              ) : null}
-            </Pressable>
-          </Link>
-        ) : null}
+                <Text style={styles.linkText}>{t("seeNotes")}</Text>
+              </Pressable>
+            </Link>
+          ) : null}
+          {actionRoute ? (
+            <Link href={actionRoute} asChild>
+              <Pressable style={styles.link}>
+                {actionIcon ? (
+                  <FontAwesomeIcon
+                    name={actionIcon}
+                    color={styles.icon.color}
+                    size={styles.icon.height}
+                  />
+                ) : null}
+                {actionLabel ? (
+                  <Text style={styles.linkText}>{actionLabel}</Text>
+                ) : null}
+              </Pressable>
+            </Link>
+          ) : null}
+        </View>
       </View>
       <View style={styles.cardContent}>
         <Text
@@ -150,4 +173,12 @@ const styles = StyleSheet.create((theme) => ({
   income: (value: number) => ({
     color: value >= 0 ? theme.colors.gaining : theme.colors.losing,
   }),
+  cardHeaderLinks: {
+    backgroundColor: theme.colors.card,
+    flexDirection: "row",
+    gap: {
+      xs: 12,
+      lg: 20,
+    },
+  },
 }));

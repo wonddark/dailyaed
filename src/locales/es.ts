@@ -35,6 +35,7 @@ const spanishTranslations = {
     settingsSubtitle: "Configura la forma en que usas esta app",
     chooseDateSubtitle: "Elige una fecha para ver el resumen",
     saveIncome: "Guardar Ingresos",
+    saveExpenses: "Guardar Gastos",
     tryAgain: "Intentar de nuevo",
     signOut: "Salir",
     requiredField: "Campo requerido",
@@ -45,6 +46,12 @@ const spanishTranslations = {
     totalExpenses: "Gastos totales",
     totalProfit: "Ganancias totales",
     dailySummary: "Resumen Diario",
+    seeNotes: "Notas",
+    notes: "Notas",
+    backToSummary: "Volver al Resumen",
+    back: "Volver",
+    noNoteFound: "No se encontraron notas para esta fecha.",
+    editNotes: "Editar",
   },
 };
 

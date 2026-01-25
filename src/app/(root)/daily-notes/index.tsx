@@ -4,31 +4,18 @@ import Button from "@/components/button";
 import { StyleSheet } from "react-native-unistyles";
 import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { RootView, View, WrapperView } from "@/components/views";
-import { ActivityIndicator, Linking, Platform, Pressable } from "react-native";
+import { ActivityIndicator, Platform, Pressable } from "react-native";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import PageHeader from "@/components/PageHeader";
-import { generateWSLink } from "@/utils/share-as-text";
 import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
-import SummaryCard from "@/components/SummaryCard";
-import SummaryCardsContainer from "@/components/summary-cards-container";
 
-const DailySummary = () => {
+const DailyNotes = () => {
   const { t } = useTranslation();
   const { date } = useLocalSearchParams();
-  const [data, setData] = useState<{
-    income: number;
-    expenses: number;
-    profit: number;
-    notes: string;
-  }>({
-    income: 0,
-    expenses: 0,
-    profit: 0,
-    notes: "",
-  });
+  const [data, setData] = useState<string>("");
   const [status, setStatus] = useState<{ loading: boolean; error: boolean }>({
     loading: true,
     error: false,
@@ -42,27 +29,17 @@ const DailySummary = () => {
     setStatus({ loading: true, error: false });
     const response = await supabase
       .from("records")
-      .select("*")
+      .select("notes")
       .eq("date", date ?? dayjs().format("YYYY-MM-DD"));
     if (response.data) {
-      setData(response.data[0] ?? { income: 0, expenses: 0, profit: 0 });
+      setData(response.data[0]?.notes ?? "");
     }
     setStatus({ loading: false, error: response.error !== null });
   };
 
-  const onShare = () => {
-    const link = generateWSLink({
-      income: data.income,
-      expenses: data.expenses,
-      profit: data.profit,
-      date: currentDate,
-    });
-    Linking.openURL(link).finally();
-  };
-
   useEffect(() => {
     if (Platform.OS === "web" && document !== undefined) {
-      document.title = "Daily Summary- DailyAED";
+      document.title = "Daily Notes- DailyAED";
     }
   }, []);
 
@@ -102,13 +79,13 @@ const DailySummary = () => {
     <RootView>
       <WrapperView>
         <PageHeader
-          title={t("summary")}
+          title={t("notes")}
           bottom={
             <View style={styles.dateContainer}>
               <Text
                 style={styles.dateLabel}
               >{`${isToday ? t("today") + " - " + currentDate : currentDate}`}</Text>
-              <Link href="/choose-date?pickDay=true" asChild>
+              <Link href="/choose-date?pickDay=true&notes=true" asChild>
                 <Pressable style={styles.link}>
                   <FontAwesomeIcons
                     name="calendar-check"
@@ -122,43 +99,30 @@ const DailySummary = () => {
           }
         />
 
-        <SummaryCardsContainer>
-          <SummaryCard
-            title={t("todayIncome")}
-            actionRoute="/edit-income"
-            actionIcon="edit"
-            actionLabel={t("edit")}
-            amount={data.income}
-          />
-          <SummaryCard
-            title={t("todayExpenses")}
-            actionRoute="/edit-expenses"
-            actionIcon="edit"
-            actionLabel={t("edit")}
-            amount={data.expenses}
-            notes={data.notes}
-            notesDate={(date as string) ?? dayjs().format("YYYY-MM-DD")}
-          />
-          <SummaryCard
-            title={t("todayProfit")}
-            amount={data.profit}
-            big
-            amountContext
-          />
-        </SummaryCardsContainer>
+        <View style={styles.notesWrapper}>
+          {data.length > 0 ? (
+            data
+              .split("\n")
+              .map((line, index) => <Text key={`${index}`}>{line}</Text>)
+          ) : (
+            <Text style={styles.alertText}>{t("noNoteFound")}</Text>
+          )}
+        </View>
 
-        <ButtonsContainer>
-          <Button
-            onPress={onShare}
-            label={t("shareByWS")}
-            style={styles.wideButton}
-          />
-          <Link href="/monthly-summary" asChild>
+        <ButtonsContainer style={styles.buttonsApart}>
+          <Link href="/daily-summary" asChild dismissTo>
             <Button
-              label={t("monthlySummary")}
+              leftIcon="arrow-left-long"
+              label={t("back")}
               variant="outlined"
-              rightIcon="arrow-right-long"
             />
+          </Link>
+          <Link
+            href={`/edit-notes?date=${date}`}
+            asChild
+            style={styles.wideButton}
+          >
+            <Button label={t("editNotes")} variant="secondary" />
           </Link>
         </ButtonsContainer>
       </WrapperView>
@@ -166,18 +130,9 @@ const DailySummary = () => {
   );
 };
 
-export default DailySummary;
+export default DailyNotes;
 
 const styles = StyleSheet.create((theme) => ({
-  headerContainer: {
-    alignItems: "flex-start",
-    width: "100%",
-    gap: 2,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 300,
-  },
   dateContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -212,5 +167,28 @@ const styles = StyleSheet.create((theme) => ({
   },
   wideButton: {
     flex: 1,
+  },
+  alertText: {
+    fontSize: {
+      xs: 15,
+      lg: 18,
+    },
+    lineHeight: {
+      xs: 15 * 1.5,
+      lg: 18 * 1.5,
+    },
+    color: theme.colors.body2,
+  },
+  buttonsApart: {
+    marginTop: {
+      xs: 20,
+      lg: 32,
+    },
+  },
+  notesWrapper: {
+    gap: {
+      xs: 2,
+      lg: 4,
+    },
   },
 }));

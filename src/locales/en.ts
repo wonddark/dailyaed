@@ -34,6 +34,7 @@ const englishTranslations = {
     settingsSubtitle: "Configure the way you use this app",
     chooseDateSubtitle: "Select a date to display the resume",
     saveIncome: "Save Income",
+    saveExpenses: "Save Expenses",
     tryAgain: "Try Again",
     signOut: "Sign Out",
     requiredField: "Required field",
@@ -44,6 +45,12 @@ const englishTranslations = {
     totalExpenses: "Total Expenses",
     totalProfit: "Total Profit",
     dailySummary: "Daily Summary",
+    seeNotes: "Notes",
+    notes: "Notes",
+    backToSummary: "Back to Summary",
+    back: "Back",
+    noNoteFound: "No notes found for this date.",
+    editNotes: "Edit",
   },
 };
 

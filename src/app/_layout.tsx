@@ -44,6 +44,10 @@ function RootLayout() {
           options={{ headerShown: false, title: "Daily Summary - DailyAED" }}
         />
         <Stack.Screen
+          name="(root)/daily-notes/index"
+          options={{ headerShown: false, title: "Daily Notes - DailyAED" }}
+        />
+        <Stack.Screen
           name="(root)/monthly-summary/index"
           options={{ headerShown: false, title: "Monthly Summary - DailyAED" }}
         />

@@ -129,9 +129,14 @@ const SignUp = () => {
               onPress={onSubmit}
               disabled={methods.formState.isSubmitting}
               loading={methods.formState.isSubmitting}
+              style={styles.wideButton}
             />
             <Link href="/sign-in" asChild dismissTo>
-              <Button label="Sign In" variant="secondary" />
+              <Button
+                label="Sign In"
+                variant="outlined"
+                rightIcon="arrow-right-long"
+              />
             </Link>
           </ButtonsContainer>
         </View>
@@ -166,5 +171,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     color: theme.colors.losing,
     fontSize: miniRuntime.screen.width <= 640 ? 12 : 14,
     fontWeight: 500,
+  },
+  wideButton: {
+    flex: 1,
   },
 }));

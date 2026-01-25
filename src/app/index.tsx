@@ -52,11 +52,15 @@ const Welcome = () => {
             </Text>
           </View>
           <ButtonsContainer>
-            <Link href="/sign-up" asChild>
+            <Link href="/sign-up" asChild style={styles.wideButton}>
               <Button label={t("createAccount")} />
             </Link>
             <Link href="/sign-in" asChild>
-              <Button label={t("signIn")} variant="secondary" />
+              <Button
+                label={t("signIn")}
+                rightIcon="arrow-right-long"
+                variant="outlined"
+              />
             </Link>
           </ButtonsContainer>
         </View>
@@ -114,5 +118,8 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     aspectRatio: 1,
     width: "85%",
     borderRadius: 1000,
+  },
+  wideButton: {
+    flex: 1,
   },
 }));

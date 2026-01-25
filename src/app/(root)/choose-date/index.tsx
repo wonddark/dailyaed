@@ -14,7 +14,10 @@ import ButtonsContainer from "@/components/ButtonsContainer";
 const ChooseDate = () => {
   const { t, i18n } = useTranslation();
   const { dismiss } = useRouter();
-  const { pickDay } = useLocalSearchParams();
+  const { pickDay, notes } = useLocalSearchParams<{
+    pickDay?: string;
+    notes?: string;
+  }>();
   const [selected, setSelected] = useState<Dayjs>(dayjs());
 
   const onChangeDate = (params: { date: DateType }) => {
@@ -27,6 +30,16 @@ const ChooseDate = () => {
 
   const onYearChange = (month: number) => {
     setSelected(dayjs(selected).year(month));
+  };
+
+  const getApplyLink = () => {
+    if (pickDay) {
+      if (notes) {
+        return `/daily-notes?date=${selected.format("YYYY-MM-DD")}`;
+      }
+      return `/daily-summary?date=${selected.format("YYYY-MM-DD")}`;
+    }
+    return `/monthly-summary?date=${selected.format("YYYY-MM")}`;
   };
 
   useEffect(() => {
@@ -104,22 +117,20 @@ const ChooseDate = () => {
         )}
 
         <ButtonsContainer>
+          <Button
+            onPress={() => dismiss()}
+            label={t("back")}
+            variant="outlined"
+            leftIcon="arrow-left-long"
+          />
           <Link
-            href={
-              pickDay
-                ? `/daily-summary?date=${selected.format("YYYY-MM-DD")}`
-                : `/monthly-summary?date=${selected.format("YYYY-MM")}`
-            }
+            href={getApplyLink()}
             asChild
             dismissTo
+            style={styles.wideButton}
           >
             <Button label={t("apply")} />
           </Link>
-          <Button
-            onPress={() => dismiss()}
-            label={t("cancel")}
-            variant="secondary"
-          />
         </ButtonsContainer>
       </WrapperView>
     </RootView>
@@ -205,5 +216,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   button_next_image: {
     color: theme.colors.body,
+  },
+  wideButton: {
+    flex: 1,
   },
 }));

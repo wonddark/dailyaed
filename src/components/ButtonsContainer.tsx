@@ -11,12 +11,9 @@ export default ButtonsContainer;
 const styles = StyleSheet.create(() => ({
   buttonsContainer: {
     gap: {
-      xs: 8,
-      lg: 6,
+      xs: 12,
+      lg: 20,
     },
-    flexDirection: {
-      xs: "column",
-      lg: "row",
-    },
+    flexDirection: "row",
   },
 }));

@@ -6,18 +6,19 @@ import {
   ViewStyle,
 } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { ReactNode } from "react";
+import FontAwesomeIcon from "@expo/vector-icons/FontAwesome6";
 
 type ButtonProps = Omit<PressableProps, "children"> & {
   label?: string;
-  variant?: "secondary" | "ghost" | "link";
+  variant?: "secondary" | "ghost" | "link" | "outlined";
   size?: "small" | "large" | "icon";
   loading?: boolean;
-  icon?: ReactNode;
+  leftIcon?: string;
+  rightIcon?: string;
 };
 
 function Button({ label, ...props }: Readonly<ButtonProps>) {
-  const { variant, size, loading, icon } = props;
+  const { variant, size, loading, leftIcon, rightIcon } = props;
 
   styles.useVariants({
     color: variant,
@@ -32,8 +33,24 @@ function Button({ label, ...props }: Readonly<ButtonProps>) {
       {loading ? (
         <ActivityIndicator size="small" color={styles.loader.color} />
       ) : null}
+
+      {leftIcon && !loading ? (
+        <FontAwesomeIcon
+          name={leftIcon}
+          color={styles.icon.color}
+          size={styles.icon.height}
+        />
+      ) : null}
+
       {label ? <Text style={styles.text}>{label}</Text> : null}
-      {icon}
+
+      {rightIcon ? (
+        <FontAwesomeIcon
+          name={rightIcon}
+          color={styles.icon.color}
+          size={styles.icon.height}
+        />
+      ) : null}
     </Pressable>
   );
 }
@@ -85,6 +102,11 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
         link: {
           paddingHorizontal: 0,
         },
+        outlined: {
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: theme.colors.muted,
+        },
         default: {
           backgroundColor: theme.colors.primary,
           ...(disabled ? { opacity: 0.75 } : {}),
@@ -101,10 +123,13 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
           color: theme.colors.secondaryContrast,
         },
         ghost: {
-          color: theme.colors.primary,
+          color: theme.colors.body2,
         },
         link: {
           color: theme.colors.primary,
+        },
+        outlined: {
+          color: theme.colors.muted,
         },
         default: {
           color: theme.colors.primaryContrast,
@@ -128,4 +153,45 @@ const styles = StyleSheet.create((theme, miniRuntime) => ({
     },
   },
   loader: { color: theme.colors.body2 },
+  icon: {
+    variants: {
+      color: {
+        secondary: {
+          color: theme.colors.secondaryContrast,
+        },
+        ghost: {
+          color: theme.colors.body2,
+        },
+        link: {
+          color: theme.colors.primary,
+        },
+        outlined: {
+          color: theme.colors.muted,
+        },
+        default: {
+          color: theme.colors.primaryContrast,
+        },
+      },
+      size: {
+        small: {
+          height: { xs: 12, lg: 14 },
+        },
+        large: {
+          height: { xs: 16, lg: 18 },
+        },
+        icon: {
+          height: {
+            xs: 20,
+            lg: 24,
+          },
+        },
+        default: {
+          height: {
+            xs: 15,
+            lg: 17,
+          },
+        },
+      },
+    },
+  },
 }));
