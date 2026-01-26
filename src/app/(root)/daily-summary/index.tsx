@@ -4,7 +4,13 @@ import Button from "@/components/button";
 import { StyleSheet } from "react-native-unistyles";
 import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { RootView, View, WrapperView } from "@/components/views";
-import { ActivityIndicator, Linking, Platform, Pressable } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Linking,
+  Platform,
+  Pressable,
+} from "react-native";
 import { supabase } from "@/lib/supabase";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -14,6 +20,7 @@ import FontAwesomeIcons from "@expo/vector-icons/FontAwesome6";
 import ButtonsContainer from "@/components/ButtonsContainer";
 import SummaryCard from "@/components/SummaryCard";
 import SummaryCardsContainer from "@/components/summary-cards-container";
+import * as Notifications from "expo-notifications";
 
 const DailySummary = () => {
   const { t } = useTranslation();
@@ -58,6 +65,48 @@ const DailySummary = () => {
       date: currentDate,
     });
     Linking.openURL(link).finally();
+  };
+
+  const onShowNotification = async () => {
+    const permissions = await Notifications.getPermissionsAsync();
+    if (permissions.status !== Notifications.PermissionStatus.GRANTED) {
+      const resp = await Notifications.requestPermissionsAsync();
+      if (resp.status == Notifications.PermissionStatus.GRANTED) {
+        Notifications.setNotificationHandler({
+          handleNotification: async () => ({
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+            shouldShowBanner: true,
+            shouldShowList: true,
+          }),
+        });
+
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "DailyAED Reminder",
+            body: "This is a friendly reminder that you hadn't make the daily input of your income and expenses. Click to insert the data.",
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.DAILY,
+            hour: 22,
+            minute: 0,
+          },
+        });
+
+        const tD = await Notifications.getNextTriggerDateAsync({
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour: 22,
+          minute: 0,
+        });
+
+        if (tD) {
+          Alert.alert(
+            "Notification Scheduled",
+            `The notification will be triggered everyday at ${dayjs(tD).format("HH:mm")}`,
+          );
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -161,6 +210,7 @@ const DailySummary = () => {
             />
           </Link>
         </ButtonsContainer>
+        <Button onPress={onShowNotification} label="Show Notification" />
       </WrapperView>
     </RootView>
   );
